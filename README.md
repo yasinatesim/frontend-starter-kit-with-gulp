@@ -16,22 +16,22 @@ Run: `npm start`
 
 ### Development Directory
 
-    ├ resources             
+    ├ resources => In gulpfile.js name can be changed            
     │   ├── pug
     |   |  ├── base
-    |   |  |  ├── _variables.pug ==> In "ThemeName": link href="ThemeName"-styles.css and script src="ThemeName"-script.js output...
+    |   |  |  ├── _variables.pug ==> In "ThemeName": link href="ThemeName"-styles.css and script src="ThemeName"-scripts.js output...
     │   ├── sass
     |   |  ├── themes
     |   |  |  ├── *.scss ===> For Theme Color Options
     │   ├── babel
     |   |  ├──  scripts.js => Command Line "//=require  base/_variables.js" inculeded file example...
-    │   ├── imeges
+    │   ├── images
     │   ├── fonts
     ├ gulpfile.js // In "ThemeName" const: Output Js and Css File Name   
     
  ### Product folder after gulp is worked
  
-    ├ "ThemeName" HTML // In "ThemeName" const with to capitalize...   
+    ├ "ThemeName" HTML // In gulpfile.js "ThemeName" const with to capitalize & This Folder Name
     │   ├── assets
     |   |  ├── css
     |   |  |  ├── colors ===> Theme Color Options
