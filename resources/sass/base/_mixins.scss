@@ -1,8 +1,0 @@
-@mixin backgroundColor($color) {
-    background-color: $color;
-  @if ( lightness($color) > lightness(#999) ) { // lightness($color) > 50 
-    color: #000;
-  } @else {
-    color: #fff;
-  }
-}
