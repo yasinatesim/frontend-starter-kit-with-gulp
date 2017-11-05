@@ -16,10 +16,10 @@ Run: `npm start`
 
 ### Development Directory
 
-    ├ resources => In gulpfile.js name can be changed            
+    ├ resources ===> In gulpfile.js name can be changed            
     │   ├── pug
     |   |  ├── base
-    |   |  |  ├── _variables.pug ==> In "ThemeName": link href="ThemeName"-styles.css and script src="ThemeName"-scripts.js output...
+    |   |  |  ├── _variables.pug ==> In "ThemeName": link href="ThemeName"-styles.css and script src="ThemeName"-scripts.js HTML output...
     │   ├── sass
     |   |  ├── themes
     |   |  |  ├── *.scss ===> For Theme Color Options
