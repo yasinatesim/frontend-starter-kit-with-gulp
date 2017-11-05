@@ -1,7 +1,8 @@
 # Front-End-Starter-Kit-with-Gulp
 
 
-#### Delete unnecessary .md files please!
+## Delete unnecessary .txt file in folders please!
+## Delete unnecessary command lines in files please!
 
 
 ![Front End Starter Kit With Gulp](https://www.yasinates.com/assets/img/FrontEndStarterKitwithGulp.png)
