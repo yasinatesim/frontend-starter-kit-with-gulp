@@ -1,13 +1,13 @@
 {
-  "name": "frontend",
+  "name": "Front-End-Starter-Kit-with-Gulp",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
     "start": "gulp"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Yasin ATEŞ",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -27,6 +27,5 @@
     "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.11",
     "run-sequence": "^2.2.0"
-  },
-  "dependencies": {}
+  }
 }
