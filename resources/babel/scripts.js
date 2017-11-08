@@ -1,1 +1,1 @@
-//=require  vendor/jquery.js
+//=require vendor/jquery.js
