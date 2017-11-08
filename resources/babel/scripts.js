@@ -1,1 +1,1 @@
-//=require  base/_variables.js
+//=require vendor/jquery.js
