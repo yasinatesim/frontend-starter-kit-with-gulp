@@ -2,7 +2,7 @@
 
 
 ### Delete unnecessary .txt file in folders please!
-### Delete unnecessary command lines in files please!
+### Delete unnecessary "Delete This Command Line" lines in files please!
 
 
 ![Front End Starter Kit With Gulp](https://www.yasinates.com/assets/img/FrontEndStarterKitwithGulp.png)
