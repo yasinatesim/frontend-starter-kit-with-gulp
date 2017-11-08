@@ -29,7 +29,7 @@ Run: `npm start`
     |   |  ├── themes
     |   |  |  ├── *.scss ===> For Theme Color Options
     │   ├── babel
-    |   |  ├──  scripts.js => Command Line "//=require  base/_variables.js" inculeded file example...
+    |   |  ├──  scripts.js => In Command Line "//=require vendor/jquery.js" inculeded file example...
     │   ├── images
     │   ├── fonts
     ├ gulpfile.js // In "ThemeName" const: Output Js and Css File Name   
@@ -46,7 +46,6 @@ Run: `npm start`
   
   
 It's that simple...
-Thanks!
   
     
     
