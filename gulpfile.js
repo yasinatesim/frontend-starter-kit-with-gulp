@@ -202,7 +202,7 @@ gulp.task('images', function () {
   // ImageMin
   .pipe(imagemin())
   // Save files
-  .pipe(gulp.dest(path.productionDir + '/assets/img/**/*'));
+  .pipe(gulp.dest(path.productionDir + '/assets/img'));
 });
 
 /**
@@ -215,7 +215,7 @@ gulp.task('vendors', function () {
   // Select files
   .src(path.developmentDir + '/vendors/**/*')
   // Save files
-  .pipe(gulp.dest(path.productionDir + '/assets/vendors/**/*'));
+  .pipe(gulp.dest(path.productionDir + '/assets/vendors'));
 });
 
 /**
