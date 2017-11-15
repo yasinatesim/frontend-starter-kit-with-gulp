@@ -11,7 +11,6 @@ const gulp         = require('gulp'),
       pug          = require('gulp-pug'),
       prettify     = require('gulp-prettify'),
 
-
 /* ================= Sass ==================== */
       sass         = require('gulp-sass'),
       autoprefixer = require('gulp-autoprefixer'),
@@ -207,6 +206,19 @@ gulp.task('images', function () {
 });
 
 /**
+ * Copy vendors files
+ * -----------------------------------------------------------------------------
+ */
+
+gulp.task('vendors', function () {
+  return gulp
+  // Select files
+  .src(path.developmentDir + '/vendors/**/*')
+  // Save files
+  .pipe(gulp.dest(path.productionDir + '/assets/vendors/**/*'));
+});
+
+/**
  * Copy font files
  * -----------------------------------------------------------------------------
  */
@@ -254,8 +266,12 @@ gulp.task('server', function () {
         gulp.start('js');
     });
 
-    watch('./'+ path.developmentDir + '/images/*', function () {
+    watch('./'+ path.developmentDir + '/images/**/*', function () {
         gulp.start('images');
+    });
+
+    watch('./'+ path.developmentDir + '/vendors/**/*', function () {
+        gulp.start('vendors');
     });
 
     watch('./'+ path.developmentDir + '/fonts/*', function () {
@@ -270,5 +286,5 @@ gulp.task('server', function () {
  */
 
 gulp.task('default', function (callback) {
-  return sequence(['pug'], ['sass'], ['themes'], ['js'], ['images'], ['fonts'], ['server'], callback);
+  return sequence(['pug'], ['sass'], ['themes'], ['js'], ['images'], ['vendors'], ['fonts'], ['server'], callback);
 });
