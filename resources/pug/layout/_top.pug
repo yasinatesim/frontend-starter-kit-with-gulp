@@ -1,2 +1,2 @@
-link(rel="stylesheet" href="assets/css/"+ ThemeName +"-styles"+ ( minify ? '.min': '' ) +".css")
-link(rel="stylesheet" href="assets/css/colors/"+ Theme + ( minify ? '.min': '' ) +".css")
+each file, dir in assetsCSS
+	link(rel="stylesheet", href="assets/" + dir + "/" + file + (minify ? ".min" : "") + ".css")
