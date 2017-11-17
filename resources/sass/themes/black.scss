@@ -1,1 +1,9 @@
-/*Delete This Command Line*/
+$colors: (
+  black: #333,
+  white: #fafafa
+);
+
+body {
+  background-color: map-get($colors,black);
+  color: map-get($colors,white);
+}
