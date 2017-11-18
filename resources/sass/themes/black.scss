@@ -3,7 +3,15 @@ $colors: (
   white: #fafafa
 );
 
+@mixin backgroundColor($color,$lightText: #fff,$darkText:#000) {
+    background-color: $color;
+  @if ( lightness($color) > lightness(#999) ) {
+    color: $darkText;
+  } @else {
+    color: $lightText;
+  }
+}
+
 body {
-  background-color: map-get($colors,black);
-  color: map-get($colors,white);
+  @include backgroundColor(map-get($colors,background),green,#999);
 }
