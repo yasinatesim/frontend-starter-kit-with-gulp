@@ -12,8 +12,5 @@ $colors: (
   }
 }
 
+//@include backgroundColor(map-get($colors, black));
 
-
-body {
-  @include backgroundColor(map-get($colors, black));
-}
