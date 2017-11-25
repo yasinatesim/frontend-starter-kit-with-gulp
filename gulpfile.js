@@ -249,6 +249,7 @@ gulp.task('server', function () {
 
   // Watch for build changes and reload browser
   bs.watch(path.productionDir + '/**/*').on('change', bs.reload);
+
   // Watch for source changes and execute associated tasks
     watch('./'+ path.developmentDir + '/pug/**/*.pug', function () {
         gulp.start('pug');
