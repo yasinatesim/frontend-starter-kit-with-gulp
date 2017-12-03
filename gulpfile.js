@@ -81,9 +81,9 @@ gulp.task('pug', function () {
   ))
   // HTML Beautify
   .pipe(prettify({
-      indent_inner_html: true,
       indent_size: 4,
-      unformatted: ['pre', 'code']
+      unformatted: ['pre', 'code'],
+      preserve_newlines: true
   }))
   // Save files
   .pipe(gulp.dest(path.productionDir));
@@ -173,7 +173,7 @@ gulp.task('js', function () {
   // Transpile
   .pipe(babel(
       {
-          presets: [['env', {loose: true, modules: false}]] // 'use-strict deleted'
+          presets: [['env', {loose: true, modules: false}]] // 'use-strict' deleted
       }
     ))
   // File Name
