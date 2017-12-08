@@ -32,6 +32,7 @@ const gulp         = require('gulp'),
 
 /* ================= Compaile & Server ==================== */
       watch        = require('gulp-watch'),
+      del          = require('del'),
       sequence     = require('run-sequence'),
       bs           = require('browser-sync'),
 
@@ -249,32 +250,41 @@ gulp.task('server', function () {
   // Watch for build changes and reload browser
   bs.watch(path.productionDir + '/**/*').on('change', bs.reload);
 
+
+
   // Watch for source changes and execute associated tasks
     watch('./'+ path.developmentDir + '/pug/**/*.pug', function () {
+        del(path.productionDir + '/*.html');
         gulp.start('pug');
     });
 
     watch(['./'+ path.developmentDir + '/sass/**/*.scss','!./'+ path.developmentDir + '/sass/themes/*.scss'], function () {
+        del(path.productionDir + '/assets/css/*.css');
         gulp.start('sass');
     });
 
     watch('./'+ path.developmentDir + '/sass/themes/*.scss', function () {
+        del(path.productionDir + '/assets/css/colors/*.css');
         gulp.start('themes');
     });
 
     watch('./'+ path.developmentDir + '/babel/**/*.js', function () {
+        del(path.productionDir + '/assets/js/*.js');
         gulp.start('js');
     });
 
     watch('./'+ path.developmentDir + '/images/**/*', function () {
+        del(path.productionDir + '/assets/img/**/*');
         gulp.start('images');
     });
 
     watch('./'+ path.developmentDir + '/vendors/**/*', function () {
+        del(path.productionDir + '/assets/vendors/**/*');
         gulp.start('vendors');
     });
 
     watch('./'+ path.developmentDir + '/fonts/*', function () {
+        del(path.productionDir + '/assets/fonts/**/*');
         gulp.start('fonts');
     });
 
