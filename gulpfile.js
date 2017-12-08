@@ -46,7 +46,6 @@ path      = {
 	productionDir: 	ThemeName.charAt(0).toUpperCase() + ThemeName.slice(1) + ' HTML'
 };
 
-
 /**
  * Catch stream errors
  * -----------------------------------------------------------------------------
