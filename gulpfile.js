@@ -250,8 +250,6 @@ gulp.task('server', function () {
   // Watch for build changes and reload browser
   bs.watch(path.productionDir + '/**/*').on('change', bs.reload);
 
-
-
   // Watch for source changes and execute associated tasks
     watch('./'+ path.developmentDir + '/pug/**/*.pug', function () {
         del(path.productionDir + '/*.html');
@@ -259,7 +257,6 @@ gulp.task('server', function () {
     });
 
     watch(['./'+ path.developmentDir + '/sass/**/*.scss','!./'+ path.developmentDir + '/sass/themes/*.scss'], function () {
-        del(path.productionDir + '/assets/css/*.css');
         gulp.start('sass');
     });
 
@@ -269,7 +266,6 @@ gulp.task('server', function () {
     });
 
     watch('./'+ path.developmentDir + '/babel/**/*.js', function () {
-        del(path.productionDir + '/assets/js/*.js');
         gulp.start('js');
     });
 
