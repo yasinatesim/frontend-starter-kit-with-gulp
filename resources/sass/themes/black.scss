@@ -5,12 +5,13 @@ $colors: (
 
 @mixin backgroundColor($color,$lightText: #fff,$darkText:#000) {
   background-color: $color;
-  @if (lightness($color) > lightness(#999)) {
+  @if (lightness($color) > 50) { // lightness($color) > lightness(#999)
     color: $darkText;
   } @else {
     color: $lightText;
   }
 }
+
 
 //@include backgroundColor(map-get($colors, black));
 
