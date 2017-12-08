@@ -42,10 +42,5 @@ Run: `npm start`
     |   |  |  ├── colors ===> Theme Color Options
     |   |  ├── js
     |   |  ├── img
-
   
-  
-It's that simple...
-  
-    
-    
+It's that simple...  
