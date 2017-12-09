@@ -5,7 +5,7 @@
 
 /**
  * If 'npm install' not working!
- * npm install babel-core babel-preset-env browser-sync del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch run-sequence --save-dev
+ * npm install babel-core babel-preset-env browser-sync del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch --save-dev
  * -----------------------------------------------------------------------------
  */
 
@@ -39,7 +39,6 @@ const gulp         = require('gulp'),
 /* ================= Compaile & Server ==================== */
       watch        = require('gulp-watch'),
       del          = require('del'),
-      sequence     = require('run-sequence'),
       bs           = require('browser-sync'),
 
 /**
@@ -297,6 +296,4 @@ gulp.task('server', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('default', function (callback) {
-  return sequence(['pug'], ['sass'], ['themes'], ['js'], ['images'], ['vendors'], ['fonts'], ['server'], callback);
-});
+gulp.task('default', ['pug','sass','themes','js','images','vendors','fonts','server']);
