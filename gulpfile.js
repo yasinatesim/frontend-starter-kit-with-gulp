@@ -5,40 +5,42 @@
 
 /**
  * If 'npm install' not working!
- * npm install babel-core babel-preset-env browser-sync gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch --save-dev
+ * npm install babel-core babel-preset-env browser-sync del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch run-sequence --save-dev
  * -----------------------------------------------------------------------------
  */
 
-/* ================= Gulp ==================== */
-const gulp         = require('gulp'),
-      gutil        = require('gulp-util'),
+ /* ================= Gulp ==================== */
+ const gulp         = require('gulp'),
+ gutil        = require('gulp-util'),
 
-/* ================= Pug ==================== */
-      pug          = require('gulp-pug'),
-      prettify     = require('gulp-prettify'),
+ /* ================= Pug ==================== */
+ pug          = require('gulp-pug'),
+ prettify     = require('gulp-prettify'),
 
-/* ================= Sass ==================== */
-      sass         = require('gulp-sass'),
-      autoprefixer = require('gulp-autoprefixer'),
-      cssmin 	   = require('gulp-cssmin'),
+ /* ================= Sass ==================== */
+ sass         = require('gulp-sass'),
+ autoprefixer = require('gulp-autoprefixer'),
+ cssmin 	   = require('gulp-cssmin'),
 
-/* ================= Babel ==================== */
-      babel        = require('gulp-babel'),
-      uglify       = require('gulp-uglify'),
+ /* ================= Babel ==================== */
+ babel        = require('gulp-babel'),
+ uglify       = require('gulp-uglify'),
 
-/* ================= Image ==================== */
-      imagemin     = require('gulp-imagemin'),
+ /* ================= Image ==================== */
+ imagemin     = require('gulp-imagemin'),
 
-/* ================= File Name & Includes ==================== */
-      rename       = require('gulp-rename'),
-      include      = require('gulp-include'),
+ /* ================= File Name & Includes ==================== */
+ rename       = require('gulp-rename'),
+ include      = require('gulp-include'),
 
-/* =================  Eror Reporting  ==================== */
-      plumber      = require('gulp-plumber'),
+ /* =================  Eror Reporting  ==================== */
+ plumber      = require('gulp-plumber'),
 
-/* ================= Compaile & Server ==================== */
-      watch        = require('gulp-watch'),
-      bs           = require('browser-sync'),
+ /* ================= Compaile & Server ==================== */
+ watch        = require('gulp-watch'),
+ del 		  = require('del'),
+ sequence 	  = require('run-sequence'),
+ bs           = require('browser-sync'),
 
 /**
  * Output Css & Js File Name and Set Paths
@@ -56,38 +58,47 @@ path      = {
  * -----------------------------------------------------------------------------
  */
 
-const gulpSrc = gulp.src;
+ const gulpSrc = gulp.src;
 
-gulp.src = function onError(...args) {
-  return gulpSrc
-    .apply(gulp, args)
+ gulp.src = function onError(...args) {
+ 	return gulpSrc
+ 	.apply(gulp, args)
     // Catch errors
     .pipe(plumber(function onError(error) {
-      gutil.log(gutil.colors.bgRed("Error (" + error.plugin + "):" + error.message));
-      this.emit('end');
+    	gutil.log(gutil.colors.bgRed("Error (" + error.plugin + "):" + error.message));
+    	this.emit('end');
     }));
 };
+
+/**
+ * Delete the productionDir directory
+ * -----------------------------------------------------------------------------
+ */
+
+ gulp.task('clean', function () {
+  return del(path.productionDir);
+});
 
 /**
  * Build views with Pug
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('pug', function () {
-  return gulp
+ gulp.task('pug', function () {
+ 	return gulp
   // Select files
   .src(path.developmentDir + '/pug/*.pug')
   // Compile Pug
   .pipe(pug(
-    {
-      pretty: true
-    }
+  {
+  	pretty: true
+  }
   ))
   // HTML Beautify
   .pipe(prettify({
-      indent_size: 4,
-      unformatted: ['pre', 'code'],
-      preserve_newlines: true
+  	indent_size: 4,
+  	unformatted: ['pre', 'code'],
+  	preserve_newlines: true
   }))
   // Save files
   .pipe(gulp.dest(path.productionDir));
@@ -98,22 +109,22 @@ gulp.task('pug', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('sass', function () {
-  return gulp
+ gulp.task('sass', function () {
+ 	return gulp
   // Select files
   .src(path.developmentDir + '/sass/styles.scss')
   // Compile Sass
   .pipe(sass(
-    {
-      outputStyle: 'expanded'
-    }
+  {
+  	outputStyle: 'expanded'
+  }
   ))
   // Add vendor prefixes
   .pipe(autoprefixer(
-    {
-      browsers: ['last 4 version'],
-      cascade: false
-    }
+  {
+  	browsers: ['last 4 version'],
+  	cascade: false
+  }
   ))
   // File Name
   .pipe(rename(ThemeName + '-styles.css'))
@@ -123,7 +134,7 @@ gulp.task('sass', function () {
   .pipe(cssmin())
   // Append suffix
   .pipe(rename({
-    suffix: '.min'
+  	suffix: '.min'
   }))
   // Save minified file
   .pipe(gulp.dest(path.productionDir + '/assets/css'));
@@ -134,22 +145,22 @@ gulp.task('sass', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('themes', function () {
-  return gulp
+ gulp.task('themes', function () {
+ 	return gulp
   // Select files
   .src(path.developmentDir + '/sass/themes/*.scss')
   // Compile Sass
   .pipe(sass(
-    {
-      outputStyle: 'expanded'
-    }
+  {
+  	outputStyle: 'expanded'
+  }
   ))
   // Add vendor prefixes
   .pipe(autoprefixer(
-    {
-      browsers: ['last 4 version'],
-      cascade: false
-    }
+  {
+  	browsers: ['last 4 version'],
+  	cascade: false
+  }
   ))
   // Save unminified file
   .pipe(gulp.dest(path.productionDir + '/assets/css/colors'))
@@ -157,7 +168,7 @@ gulp.task('themes', function () {
   .pipe(cssmin())
   // Append suffix
   .pipe(rename({
-    suffix: '.min'
+  	suffix: '.min'
   }))
   // Save minified file
   .pipe(gulp.dest(path.productionDir + '/assets/css/colors'));
@@ -168,18 +179,18 @@ gulp.task('themes', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('js', function () {
-  return gulp
+ gulp.task('js', function () {
+ 	return gulp
   // Select files
   .src(path.developmentDir + '/babel/scripts.js')
   // Concatenate includes
   .pipe(include())
   // Transpile
   .pipe(babel(
-      {
+  {
           presets: [['env', {loose: true, modules: false}]] // 'use-strict' deleted
       }
-    ))
+      ))
   // File Name
   .pipe(rename(ThemeName + '-scripts.js'))
   // Save unminified file
@@ -188,7 +199,7 @@ gulp.task('js', function () {
   .pipe(uglify())
   // Append suffix
   .pipe(rename({
-    suffix: '.min'
+  	suffix: '.min'
   }))
   // Save minified file
   .pipe(gulp.dest(path.productionDir + '/assets/js'));
@@ -199,8 +210,8 @@ gulp.task('js', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('images', function () {
-  return gulp
+ gulp.task('images', function () {
+ 	return gulp
   // Select files
   .src(path.developmentDir + '/images/**/*')
   // ImageMin
@@ -214,8 +225,8 @@ gulp.task('images', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('vendors', function () {
-  return gulp
+ gulp.task('vendors', function () {
+ 	return gulp
   // Select files
   .src(path.developmentDir + '/vendors/**/*')
   // Save files
@@ -227,8 +238,8 @@ gulp.task('vendors', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('fonts', function () {
-  return gulp
+ gulp.task('fonts', function () {
+ 	return gulp
   // Select files
   .src(path.developmentDir + '/fonts/*')
   // Save files
@@ -240,48 +251,48 @@ gulp.task('fonts', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('server', function () {
+ gulp.task('server', function () {
 
 // Create and initialize local server
-  bs.create();
-  bs.init({
-    notify: false,
-    server: './' + path.productionDir,
-    open: 'local',
-    ui: false
-  });
+bs.create();
+bs.init({
+	notify: false,
+	server: './' + path.productionDir,
+	open: 'local',
+	ui: false
+});
 
   // Watch for build changes and reload browser
   bs.watch(path.productionDir + '/**/*').on('change', bs.reload);
 
   // Watch for source changes and execute associated tasks
-    watch('./'+ path.developmentDir + '/pug/**/*.pug', function () {
-        gulp.start('pug');
-    });
+  watch('./'+ path.developmentDir + '/pug/**/*.pug', function () {
+  	gulp.start('pug');
+  });
 
-    watch(['./'+ path.developmentDir + '/sass/**/*.scss','!./'+ path.developmentDir + '/sass/themes/*.scss'], function () {
-        gulp.start('sass');
-    });
+  watch(['./'+ path.developmentDir + '/sass/**/*.scss','!./'+ path.developmentDir + '/sass/themes/*.scss'], function () {
+  	gulp.start('sass');
+  });
 
-    watch('./'+ path.developmentDir + '/sass/themes/*.scss', function () {
-        gulp.start('themes');
-    });
+  watch('./'+ path.developmentDir + '/sass/themes/*.scss', function () {
+  	gulp.start('themes');
+  });
 
-    watch('./'+ path.developmentDir + '/babel/**/*.js', function () {
-        gulp.start('js');
-    });
+  watch('./'+ path.developmentDir + '/babel/**/*.js', function () {
+  	gulp.start('js');
+  });
 
-    watch('./'+ path.developmentDir + '/images/**/*', function () {
-        gulp.start('images');
-    });
+  watch('./'+ path.developmentDir + '/images/**/*', function () {
+  	gulp.start('images');
+  });
 
-    watch('./'+ path.developmentDir + '/vendors/**/*', function () {
-        gulp.start('vendors');
-    });
+  watch('./'+ path.developmentDir + '/vendors/**/*', function () {
+  	gulp.start('vendors');
+  });
 
-    watch('./'+ path.developmentDir + '/fonts/*', function () {
-        gulp.start('fonts');
-    });
+  watch('./'+ path.developmentDir + '/fonts/*', function () {
+  	gulp.start('fonts');
+  });
 
 });
 
@@ -290,4 +301,6 @@ gulp.task('server', function () {
  * -----------------------------------------------------------------------------
  */
 
-gulp.task('default', ['pug','sass','themes','js','images','vendors','fonts','server']);
+gulp.task('default', function (callback) {
+  return sequence(['clean'], ['pug'], ['sass'], ['themes'], ['js'], ['images'], ['vendors'], ['fonts'], ['server'], callback);
+});
