@@ -60,9 +60,7 @@ const gulp = require('gulp'),
 
 const gulpSrc = gulp.src;
 
-gulp.src = function onError(...args
-)
-{
+gulp.src = function onError(...args) {
     return gulpSrc
         .apply(gulp, args)
         // Catch errors
@@ -70,8 +68,7 @@ gulp.src = function onError(...args
             gutil.log(gutil.colors.bgRed("Error (" + error.plugin + "):" + error.message));
             this.emit('end');
         }));
-}
-;
+};
 
 /**
  * Delete the productionDir directory
