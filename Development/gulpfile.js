@@ -49,6 +49,7 @@ const gulp = require('gulp'),
 
     ThemeName = 'theme', // Output CSS and Javascript File Name
     path = {
+    	base: '../'
         developmentDir: 'resources',
         productionDir: ThemeName.charAt(0).toUpperCase() + ThemeName.slice(1) + ' HTML'
     };
@@ -101,7 +102,7 @@ gulp.task('pug', function () {
             preserve_newlines: true
         }))
         // Save files
-        .pipe(gulp.dest(path.productionDir));
+        .pipe(gulp.dest(path.base + path.productionDir));
 });
 
 /**
@@ -129,7 +130,7 @@ gulp.task('sass', function () {
         // File Name
         .pipe(rename(ThemeName + '-styles.css'))
         // Save unminified file
-        .pipe(gulp.dest(path.productionDir + '/assets/css'))
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/css'))
         // Optimize and minify
         .pipe(cssmin())
         // Append suffix
@@ -137,7 +138,7 @@ gulp.task('sass', function () {
             suffix: '.min'
         }))
         // Save minified file
-        .pipe(gulp.dest(path.productionDir + '/assets/css'));
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/css'));
 });
 
 /**
@@ -163,7 +164,7 @@ gulp.task('themes', function () {
             }
         ))
         // Save unminified file
-        .pipe(gulp.dest(path.productionDir + '/assets/css/colors'))
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/css/colors'))
         // Optimize and minify
         .pipe(cssmin())
         // Append suffix
@@ -171,7 +172,7 @@ gulp.task('themes', function () {
             suffix: '.min'
         }))
         // Save minified file
-        .pipe(gulp.dest(path.productionDir + '/assets/css/colors'));
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/css/colors'));
 });
 
 /**
@@ -194,7 +195,7 @@ gulp.task('js', function () {
         // File Name
         .pipe(rename(ThemeName + '-scripts.js'))
         // Save unminified file
-        .pipe(gulp.dest(path.productionDir + '/assets/js'))
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/js'))
         // Optimize and minify
         .pipe(uglify())
         // Append suffix
@@ -202,7 +203,7 @@ gulp.task('js', function () {
             suffix: '.min'
         }))
         // Save minified file
-        .pipe(gulp.dest(path.productionDir + '/assets/js'));
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/js'));
 });
 
 /**
@@ -217,7 +218,7 @@ gulp.task('images', function () {
         // ImageMin
         .pipe(imagemin())
         // Save files
-        .pipe(gulp.dest(path.productionDir + '/assets/img'));
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/img'));
 });
 
 /**
@@ -230,7 +231,7 @@ gulp.task('vendors', function () {
     // Select files
         .src(path.developmentDir + '/vendors/**/*')
         // Save files
-        .pipe(gulp.dest(path.productionDir + '/assets/vendors'));
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/vendors'));
 });
 
 /**
@@ -243,7 +244,7 @@ gulp.task('fonts', function () {
     // Select files
         .src(path.developmentDir + '/fonts/*')
         // Save files
-        .pipe(gulp.dest(path.productionDir + '/assets/fonts'));
+        .pipe(gulp.dest(path.base + path.productionDir + '/assets/fonts'));
 });
 
 /**
@@ -257,13 +258,13 @@ gulp.task('server', function () {
     bs.create();
     bs.init({
         notify: false,
-        server: './' + path.productionDir,
+        server: path.base + path.productionDir,
         open: 'local',
         ui: false
     });
 
     // Watch for build changes and reload browser
-    bs.watch(path.productionDir + '/**/*').on('change', bs.reload);
+    bs.watch(path.base + path.productionDir + '/**/*').on('change', bs.reload);
 
     // Watch for source changes and execute associated tasks
     watch('./' + path.developmentDir + '/pug/**/*.pug', function () {
