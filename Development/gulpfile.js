@@ -77,7 +77,7 @@ gulp.src = function onError(...args) {
  */
 
 gulp.task('clean', function () {
-    return del(path.productionDir);
+    return del(path.base + path.productionDir);
 });
 
 /**
