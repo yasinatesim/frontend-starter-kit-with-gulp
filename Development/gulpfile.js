@@ -49,7 +49,7 @@ const gulp = require('gulp'),
 
     ThemeName = 'theme', // Output CSS and Javascript File Name
     path = {
-    	base: '../'
+    	base: '../',
         developmentDir: 'resources',
         productionDir: ThemeName.charAt(0).toUpperCase() + ThemeName.slice(1) + ' HTML'
     };
