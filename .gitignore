@@ -1,2 +1,4 @@
-node_modules
+Development/node_modules
+Development/package-lock.json
+* HTML
 .idea

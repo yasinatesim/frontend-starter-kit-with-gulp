@@ -18,6 +18,11 @@ html(lang="en")
 
     +line
 
+    //Site Title
+    title=title
+
+    +line
+
     //For SEO Optimization required.
     meta(name='description', content=description)
     meta(name='keywords', content=keywords)
@@ -25,33 +30,19 @@ html(lang="en")
 
     +line
 
-    meta(property='og:title', content=title)
-    meta(property='og:image', content=logo_url)
-    meta(property='og:description', content=description)
+    //Favicons
+    link(rel='shortcut icon', href=favicon, type='image/x-icon')
+    link(rel='icon', href=favicon, type='image/x-icon')
 
-    +line
-
-    meta(name='robots', content=robots)
-    link(rel='canonical', href=canonical)
 
     +line
 
     meta(name="theme-color" content=ThemeColor)
     
     +line
-
-    //Favicons
-    link(rel='shortcut icon', href=favicon, type='image/x-icon')
-    link(rel='icon', href=favicon, type='image/x-icon')
-
-    +line
     
     include _top
 
-    +line
-
-    //Site Title
-    title=title
 
   body
 
