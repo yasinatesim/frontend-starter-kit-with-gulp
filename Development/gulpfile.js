@@ -47,7 +47,7 @@ const gulp = require('gulp'),
      * -----------------------------------------------------------------------------
      */
 
-    ThemeName = 'theme', // Output CSS and Javascript File Name
+    ThemeName = 'theme',
     path = {
     	base: '../',
         developmentDir: 'resources',
@@ -129,8 +129,6 @@ gulp.task('sass', function () {
                 cascade: false
             }
         ))
-        // File Name
-        .pipe(rename(ThemeName + '-styles.css'))
         // Save unminified file
         .pipe(gulp.dest(path.base + path.productionDir + '/assets/css'))
         // Optimize and minify
@@ -194,8 +192,6 @@ gulp.task('js', function () {
                 presets: [['env', {loose: true, modules: false}]] // 'use-strict' deleted
             }
         ))
-        // File Name
-        .pipe(rename(ThemeName + '-scripts.js'))
         // Save unminified file
         .pipe(gulp.dest(path.base + path.productionDir + '/assets/js'))
         // Optimize and minify
