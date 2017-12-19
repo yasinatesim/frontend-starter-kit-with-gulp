@@ -115,7 +115,7 @@ gulp.task('pug', function () {
 gulp.task('sass', function () {
     return gulp
     // Select files
-        .src(path.developmentDir + '/sass/styles.scss')
+        .src(path.developmentDir + '/sass/style.scss')
         // Compile Sass
         .pipe(sass(
             {
@@ -183,7 +183,7 @@ gulp.task('themes', function () {
 gulp.task('js', function () {
     return gulp
     // Select files
-        .src(path.developmentDir + '/babel/scripts.js')
+        .src(path.developmentDir + '/babel/script.js')
         // Concatenate includes
         .pipe(include())
         // Transpile
