@@ -1,12 +1,26 @@
 mixin line
-    ="\n"
+	if (!demo)
+		="\n"
 
 mixin tab
-    ="\t"
+	if (!demo)
+		="\t"
+
 
 mixin lineTab
-    +line
-    +tab    
-    
+		+line
+		+tab    
+		
 mixin img(photo,placehold,alt)
-    img(src=(demo ? photo : placehold) alt=alt)
+		img(src=(demo ? photo : placehold) alt=alt)
+
+
+
+mixin c(command)
+	+line 
+	if (!demo) 	
+		<!-- #{command} -->
+	
+	
+
+

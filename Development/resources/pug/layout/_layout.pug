@@ -1,27 +1,30 @@
 include ../base/_variables
 include ../base/_mixins
 
-- if (demo && minify) {
+- if (demo) {
 //
-  * This is a premium product available exclusively at themeforest.net
-  *
-  * The demo files are minified/crypted for copyright reasons,
-  * you will find them, expanded, well commented and
-  * coded accurately in your download pack.
+  =============================================================================
+
+    * This is a premium product available exclusively at themeforest.net
+    * The demo files are minified/crypted for copyright reasons,
+    * you will find them, expanded, well commented and
+    * coded accurately in your download pack.
+  
+  =============================================================================
+="\n"
 - } else {
   //
-
     Template;
-      * Name	   	      : ThemeName
-      * Created Date    : date
-      * Version         : 0.0.1
+        * Name          : ThemeName
+        * Created Date  : date
+        * Version       : 0.0.1
 
     Author;
-      * Gmail           : yasinatesim@gmail.com
-      * Web Site        : http://www.yasinates.com
+        * Gmail         : yasinatesim@gmail.com
+        * Web Site      : http://www.yasinates.com
 
     ============================================================================================
-             Copyright (c) 2017 - yasinatesim - https://themeforest.net/user/yasinatesim
+            Copyright (c) 2017 - yasinatesim - https://themeforest.net/user/yasinatesim
     ============================================================================================
 - }
 
@@ -34,50 +37,64 @@ html(lang="en")
 
     +line
 
-    //Making sure the web-site will scale fine on mobiles
+    +c('Making sure the web-site will scale fine on mobiles')
     meta(name="viewport" content="width=device-width, initial-scale=1")
 
     +line
+    
 
-    //Trying to force IE to perform at its best
+    +c('Trying to force IE to perform at its best')
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
 
-    +line
+    +line    
 
-    //Site Title
+    +c('Site Title')
     title=title
 
-    +line
+    +line   
 
-    //For SEO Optimization required
+    +c('For SEO Optimization required')
     meta(name='description', content=description)
     meta(name='keywords', content=keywords)
     meta(name='author', content=author)
 
-    +line
+    +line    
 
-    //Favicons
+    +c('Favicons')
     link(rel='shortcut icon', href=favicon, type='image/x-icon')
     link(rel='icon', href=favicon, type='image/x-icon')
 
-    +line
-    //Address Bar Color
+
+    +line    
+
+    +c('Address Bar Color')
     meta(name="theme-color" content=ThemeColor)
     
-    +line
+
+    +line    
     
     include _top
 
   body
     
-    //=============== Start Of Header ===============
+
+    +line
+
+    +c('=============== Start Of Header ===============')
     include _header
-    //=============== End Of Header ===============
+    +c('=============== End Of Header ===============')
+    
+
+    +line
     
     block content
 
-    //=============== Start Of Footer ===============
+    +line
+
+    +c('=============== Start Of Footer ===============')
     include _footer
-    //=============== End Of Footer ===============
+    +c('=============== End Of Footer ===============')
+
+    +line
 
     include _bottom

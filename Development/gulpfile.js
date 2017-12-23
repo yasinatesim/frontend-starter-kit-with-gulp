@@ -39,6 +39,7 @@ const gulp = require('gulp'),
     /* ================= Compaile & Server ==================== */
     watch = require('gulp-watch'),
     del = require('del'),
+    gulpif = require('gulp-if'),
     sequence = require('run-sequence'),
     bs = require('browser-sync'),
 
@@ -48,6 +49,7 @@ const gulp = require('gulp'),
      */
 
     ThemeName = 'theme',
+    demo = true,
     path = {
     	base: '../',
         developmentDir: 'resources',
@@ -94,15 +96,20 @@ gulp.task('pug', function () {
         // Compile Pug
         .pipe(pug(
             {
-                pretty: true
+                pretty: !demo,
+                data: {
+                  demo: demo
+                }
             }
         ))
+        
         // HTML Beautify
-        .pipe(prettify({
+        .pipe(gulpif(!demo,prettify({
             indent_size: 4,
             unformatted: ['pre', 'code'],
             preserve_newlines: true
-        }))
+        })))
+
         // Save files
         .pipe(gulp.dest(path.base + path.productionDir));
 });
