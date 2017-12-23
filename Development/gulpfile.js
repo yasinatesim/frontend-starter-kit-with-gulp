@@ -5,7 +5,7 @@
 
 /**
  * If 'npm install' not working!
- * npm install babel-core babel-preset-env browser-sync del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch run-sequence --save-dev
+ * npm install babel-core babel-preset-env browser-sync del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-if gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch run-sequence --save-dev
  * -----------------------------------------------------------------------------
  */
 
