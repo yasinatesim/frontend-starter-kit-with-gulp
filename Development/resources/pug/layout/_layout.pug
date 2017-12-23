@@ -36,7 +36,7 @@ html(lang="en")
 
 
     +line
-
+    //Address Bar Color
     meta(name="theme-color" content=ThemeColor)
     
     +line
@@ -45,11 +45,16 @@ html(lang="en")
 
 
   body
-
+    
+    //=============== Start Of Header ===============
     include _header
-
+    //=============== End Of Header ===============
+    
     block content
 
+
+    //=============== Start Of Footer ===============
     include _footer
+    //=============== End Of Footer ===============
 
     include _bottom
