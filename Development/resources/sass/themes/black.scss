@@ -1,10 +1,9 @@
-$colors: (
-        black: #333,
-        white: #fafafa
-);
+$black: #333;
+$white: #fafafa;
 
-@mixin backgroundColor($color,$lightText: #fff,$darkText:#000) {
-  background-color: $color;
+
+@mixin backgroundColor($bgColor,$lightText: #fff,$darkText:#000) {
+  background-color: $bgColor;
   @if (lightness($color) > 50) { // lightness($color) > lightness(#999)
     color: $darkText;
   } @else {
@@ -13,5 +12,5 @@ $colors: (
 }
 
 
-//@include backgroundColor(map-get($colors, black));
+//@include backgroundColor($black);
 
