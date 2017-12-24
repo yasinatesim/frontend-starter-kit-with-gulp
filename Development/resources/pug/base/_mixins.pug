@@ -1,26 +1,25 @@
+//- Line Mixin
 mixin line
 	if (!demo)
 		="\n"
 
+//- Tab Mixin
 mixin tab
 	if (!demo)
 		="\t"
 
-
+//- LineTab Mixin
 mixin lineTab
-		+line
-		+tab    
-		
+	+line
+	+tab    
+
+//- Displaceable Image Mixin with Placeholder
 mixin img(photo,placehold,alt)
-		img(src=(demo ? photo : placehold) alt=alt)
+	img(src=(demo ? photo : placehold) alt=alt)
 
 
-
+//- Deleted Command Line Mixin
 mixin c(command)
 	+line 
 	if (!demo) 	
 		<!-- #{command} -->
-	
-	
-
-
