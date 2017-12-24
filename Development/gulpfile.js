@@ -220,7 +220,7 @@ gulp.task('js', function () {
 gulp.task('images', function () {
     return gulp
     // Select files
-        .src(!demo ? path.developmentDir + '/images/**/*' : path.developmentDir + '/images/sample/*')
+        .src(!demo ? path.developmentDir + '/images/**/*' : path.developmentDir + '/images/sample/**/*')
         // ImageMin
         .pipe(imagemin())
         // Save files
