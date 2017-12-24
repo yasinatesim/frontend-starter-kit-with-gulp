@@ -1,25 +1,33 @@
 //- Line Mixin
 mixin line
-	if (!demo)
-		="\n"
+  if (!demo)
+    ="\n"
 
 //- Tab Mixin
 mixin tab
-	if (!demo)
-		="\t"
+  if (!demo)
+    ="\t"
 
 //- LineTab Mixin
 mixin lineTab
-	+line
-	+tab    
+  +line
+  +tab    
 
 //- Displaceable Image Mixin with Placeholder
 mixin img(photo,alt)
-	img(src=(!demo ? "assets/img/" + photo : "assets/img/sample/" + photo) alt=alt)
+  img(src=(!demo ? "assets/img/" + photo : "assets/img/sample/" + photo) alt=alt)
 
 
 //- Deleted Command Line Mixin
 mixin c(command)
-	+line 
-	if (!demo) 	
-		<!-- #{command} -->
+  +line 
+  if (!demo)  
+    <!-- #{command} -->
+
+//- Add .min suffix Mixins
+mixin link(source)
+  link(rel="stylesheet" href="assets/" + source + (demo ? ".min" : "") + ".css" )
+
+mixin script(source)
+  script(src="assets/" + source + (demo ? ".min" : "") + ".js")
+    

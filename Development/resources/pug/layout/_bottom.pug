@@ -1,11 +1,26 @@
 +line
 
++c('=============== Start Of Color Switcher -- For Demo ===============')
++script('vendors/color-switcher/js/color-switcher')
+script.
+  var demo = demo;
+  var colorSheets = [
+      {color: "#f00",title: "Switch to Red",href: "assets/css/colors/red.min.css"},
+      {color: "#0f0",title: "Switch to Green",href: "assets/css/colors/green.min.css"},
+      {color: "#00f",title: "Switch to Blue",href: "assets/css/colors/blue.min.css"}        
+  ];
+  ColorSwitcher.init(colorSheets);
++c('=============== End Of Color Switcher -- For Demo ===============')
+
++line
+
 +c('Vendors')
-script(type="text/javascript" src="assets/vendors/jquery/jquery-3.2.1" + (demo ? ".min" : "") + ".js")
-script(type="text/javascript" src="assets/vendors/popper/popper" + (demo ? ".min" : "") + ".js")
-script(type="text/javascript" src="assets/vendors/bootstrap/js/bootstrap" + (demo ? ".min" : "") + ".js")
++script('vendors/jquery/jquery-3.2.1')
++script('vendors/popper/popper')
++script('vendors/bootstrap/js/bootstrap')
 
 +line
 
 +c('Theme Scripts')
-script(type="text/javascript" src="assets/js/script" + (demo ? ".min" : "") + ".js")
++script('js/script')
+

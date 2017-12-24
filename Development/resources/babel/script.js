@@ -15,6 +15,7 @@
 
 */
 
+/* =============== Start Of Document Raedy =============== */
 $(document).ready(function(){
   'use strict';
   
@@ -22,5 +23,5 @@ $(document).ready(function(){
   //=require base/_mixins.js
   
 });
-  
+/* =============== End Of Document Raedy =============== */  
 

@@ -48,7 +48,7 @@ const gulp = require('gulp'),
      * -----------------------------------------------------------------------------
      */
 
-    demo = true, // Minified file iclude 
+    demo = false, // Minified file iclude 
     ThemeName = 'theme',
     path = {
     	base: '../',

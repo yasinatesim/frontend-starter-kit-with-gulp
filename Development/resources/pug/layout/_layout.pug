@@ -33,18 +33,18 @@ doctype
 html(lang="en")
   head
 
-    meta(charset="UTF-8")
+    meta(charset="UTF-8")/
 
     +line
 
     +c('Making sure the web-site will scale fine on mobiles')
-    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="viewport" content="width=device-width, initial-scale=1")/
 
     +line
     
 
     +c('Trying to force IE to perform at its best')
-    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")/
 
     +line    
 
@@ -54,21 +54,21 @@ html(lang="en")
     +line   
 
     +c('For SEO Optimization required')
-    meta(name='description', content=description)
-    meta(name='keywords', content=keywords)
-    meta(name='author', content=author)
+    meta(name='description', content=description)/
+    meta(name='keywords', content=keywords)/
+    meta(name='author', content=author)/
 
     +line    
 
     +c('Favicons')
-    link(rel='shortcut icon', href=favicon, type='image/x-icon')
-    link(rel='icon', href=favicon, type='image/x-icon')
+    link(rel='shortcut icon', href=favicon, type='image/x-icon')/
+    link(rel='icon', href=favicon, type='image/x-icon')/
 
 
     +line    
 
     +c('Address Bar Color')
-    meta(name="theme-color" content=ThemeColor)
+    meta(name="theme-color" content=ThemeColor)/
     
 
     +line    
@@ -94,7 +94,5 @@ html(lang="en")
     +c('=============== Start Of Footer ===============')
     include _footer
     +c('=============== End Of Footer ===============')
-
-    +line
 
     include _bottom
