@@ -48,8 +48,8 @@ const gulp = require('gulp'),
      * -----------------------------------------------------------------------------
      */
 
+    demo = true, // Minified file iclude 
     ThemeName = 'theme',
-    demo = true,
     path = {
     	base: '../',
         developmentDir: 'resources',
@@ -136,8 +136,9 @@ gulp.task('sass', function () {
                 cascade: false
             }
         ))
+
         // Save unminified file
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/css'))
+        .pipe(gulpif(!demo,gulp.dest(path.base + path.productionDir + '/assets/css')))        
         // Optimize and minify
         .pipe(cssmin())
         // Append suffix
@@ -171,7 +172,7 @@ gulp.task('themes', function () {
             }
         ))
         // Save unminified file
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/css/colors'))
+        .pipe(gulpif(!demo,gulp.dest(path.base + path.productionDir + '/assets/css/colors')))
         // Optimize and minify
         .pipe(cssmin())
         // Append suffix
@@ -200,7 +201,7 @@ gulp.task('js', function () {
             }
         ))
         // Save unminified file
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/js'))
+        .pipe(gulpif(!demo,gulp.dest(path.base + path.productionDir + '/assets/js')))
         // Optimize and minify
         .pipe(uglify())
         // Append suffix
@@ -219,11 +220,11 @@ gulp.task('js', function () {
 gulp.task('images', function () {
     return gulp
     // Select files
-        .src(path.developmentDir + '/images/**/*')
+        .src(!demo ? path.developmentDir + '/images/**/*' : path.developmentDir + '/images/sample/*')
         // ImageMin
         .pipe(imagemin())
         // Save files
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/img'));
+        .pipe(gulpif(!demo,gulp.dest(path.base + path.productionDir + '/assets/img'),gulp.dest(path.base + path.productionDir + '/assets/img/sample')));        
 });
 
 /**
