@@ -14,8 +14,8 @@ mixin lineTab
 	+tab    
 
 //- Displaceable Image Mixin with Placeholder
-mixin img(photo,placehold,alt)
-	img(src=(demo ? photo : placehold) alt=alt)
+mixin img(photo,alt)
+	img(src=(!demo ? "assets/img/" + photo : "assets/img/sample/" + photo) alt=alt)
 
 
 //- Deleted Command Line Mixin
