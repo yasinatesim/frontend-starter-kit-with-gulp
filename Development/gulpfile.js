@@ -1,76 +1,77 @@
 /**
- * Dependencies
- * -----------------------------------------------------------------------------
- */
+* Dependencies
+* -----------------------------------------------------------------------------
+*/
 
 /**
- * If 'npm install' not working!
- * npm install babel-core babel-preset-env browser-sync del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-if gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch run-sequence --save-dev
- * -----------------------------------------------------------------------------
- */
+* If 'npm install' not working!
+* npm install babel-core babel-preset-env browser-sync del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-if gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch run-sequence --save-dev
+* -----------------------------------------------------------------------------
+*/
 
-/* ================= Gulp ==================== */
-const gulp = require('gulp'),
-    gutil = require('gulp-util'),
+/* ========================= Gulp ========================= */
+const   gulp            = require('gulp'),
+        gutil           = require('gulp-util'),
 
-    /* ================= Pug ==================== */
-    pug = require('gulp-pug'),
-    prettify = require('gulp-prettify'),
+/* ========================= Pug ========================= */
+        pug             = require('gulp-pug'),
+        prettify        = require('gulp-prettify'),
 
-    /* ================= Sass ==================== */
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssmin = require('gulp-cssmin'),
+/* ========================= Sass ========================= */
+        sass            = require('gulp-sass'),
+        autoprefixer    = require('gulp-autoprefixer'),
+        cssmin          = require('gulp-cssmin'),
 
-    /* ================= Babel ==================== */
-    babel = require('gulp-babel'),
-    uglify = require('gulp-uglify'),
+/* ========================= Babel ========================= */
+        babel           = require('gulp-babel'),
+        uglify          = require('gulp-uglify'),
 
-    /* ================= Image ==================== */
-    imagemin = require('gulp-imagemin'),
+/* ========================= Image ========================= */
+        imagemin        = require('gulp-imagemin'),
 
-    /* ================= File Name & Includes ==================== */
-    rename = require('gulp-rename'),
-    include = require('gulp-include'),
+/* ========================= File Name & Includes ========================= */
+        rename          = require('gulp-rename'),
+        include         = require('gulp-include'),
 
-    /* =================  Eror Reporting  ==================== */
-    plumber = require('gulp-plumber'),
+/* ========================= Eror Reporting ========================= */
+        plumber         = require('gulp-plumber'),
 
-    /* ================= Compaile & Server ==================== */
-    watch = require('gulp-watch'),
-    del = require('del'),
-    gulpif = require('gulp-if'),
-    sequence = require('run-sequence'),
-    bs = require('browser-sync'),
-
-    /**
-     * Output Css & Js File Name and Set Paths
-     * -----------------------------------------------------------------------------
-     */
-
-    demo = false, // Minified file include 
-    ThemeName = 'theme',
-    path = {
-    	base: '../',
-        developmentDir: 'resources',
-        productionDir: ThemeName.charAt(0).toUpperCase() + ThemeName.slice(1) + ' HTML'
-    };
+/* ========================= Compaile & Server ========================= */
+        watch           = require('gulp-watch'),
+        del             = require('del'),
+        gulpif          = require('gulp-if'),
+        sequence        = require('run-sequence'),
+        bs              = require('browser-sync'),
 
 /**
- * Catch stream errors
- * -----------------------------------------------------------------------------
- */
+* Output Css & Js File Name and Set Paths
+* -----------------------------------------------------------------------------
+*/
+
+        demo = true, //Minified file include 
+        ThemeName = 'theme',
+        path = {
+            base: '../',
+            developmentDir: 'resources',
+            productionDir: ThemeName.charAt(0).toUpperCase() + ThemeName.slice(1) + ' HTML'
+        };
+
+/**
+* Catch stream errors
+* -----------------------------------------------------------------------------
+*/
 
 const gulpSrc = gulp.src;
 
 gulp.src = function onError(...args) {
     return gulpSrc
-        .apply(gulp, args)
-        // Catch errors
-        .pipe(plumber(function onError(error) {
+    .apply(gulp, args)
+    //Catch errors
+    .pipe(plumber(function onError(error) {
             gutil.log(gutil.colors.bgRed("Error (" + error.plugin + "):" + error.message));
             this.emit('end');
-        }));
+        }
+    ));
 };
 
 /**
@@ -79,9 +80,11 @@ gulp.src = function onError(...args) {
  */
 
 gulp.task('clean', function () {
-    return del(path.base + path.productionDir, {
-        force: true
-    });
+    return del(path.base + path.productionDir, 
+        {
+            force: true
+        }
+    );
 });
 
 /**
@@ -91,27 +94,31 @@ gulp.task('clean', function () {
 
 gulp.task('pug', function () {
     return gulp
-    // Select files
-        .src(path.developmentDir + '/pug/*.pug')
-        // Compile Pug
-        .pipe(pug(
-            {
-                pretty: !demo,
-                data: {
-                  demo: demo
-                }
+    //Select files
+    .src(path.developmentDir + '/pug/*.pug')
+    //Compile Pug
+    .pipe(pug(
+        {
+            pretty: !demo,
+            data: {
+                demo: demo
             }
-        ))
-        
-        // HTML Beautify
-        .pipe(gulpif(!demo,prettify({
-            indent_size: 4,
-            unformatted: ['pre', 'code'],
-            preserve_newlines: true
-        })))
+        }
+    ))
 
-        // Save files
-        .pipe(gulp.dest(path.base + path.productionDir));
+    //HTML Beautify
+    .pipe(gulpif(!demo, 
+        prettify(
+            {
+                indent_size: 4,
+                unformatted: ['pre', 'code'],
+                preserve_newlines: true
+            }
+        )
+    ))
+
+    //Save files
+    .pipe(gulp.dest(path.base + path.productionDir));
 });
 
 /**
@@ -121,32 +128,34 @@ gulp.task('pug', function () {
 
 gulp.task('sass', function () {
     return gulp
-    // Select files
-        .src(path.developmentDir + '/sass/style.scss')
-        // Compile Sass
-        .pipe(sass(
-            {
-                outputStyle: 'expanded'
-            }
-        ))
-        // Add vendor prefixes
-        .pipe(autoprefixer(
-            {
-                browsers: ['last 4 version'],
-                cascade: false
-            }
-        ))
+    //Select files
+    .src(path.developmentDir + '/sass/style.scss')
+    //Compile Sass
+    .pipe(sass(
+        {
+            outputStyle: 'expanded'
+        }
+    ))
+    //Add vendor prefixes
+    .pipe(autoprefixer(
+        {
+            browsers: ['last 4 version'],
+            cascade: false
+        }
+    ))
 
-        // Save unminified file
-        .pipe(gulpif(!demo,gulp.dest(path.base + path.productionDir + '/assets/css')))        
-        // Optimize and minify
-        .pipe(cssmin())
-        // Append suffix
-        .pipe(rename({
+    //Save unminified file
+    .pipe(gulpif(!demo, gulp.dest(path.base + path.productionDir + '/assets/css')))
+    //Optimize and minify
+    .pipe(cssmin())
+    //Append suffix
+    .pipe(rename(
+        {
             suffix: '.min'
-        }))
-        // Save minified file
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/css'));
+        }
+    ))
+    //Save minified file
+    .pipe(gulp.dest(path.base + path.productionDir + '/assets/css'));
 });
 
 /**
@@ -156,31 +165,33 @@ gulp.task('sass', function () {
 
 gulp.task('themes', function () {
     return gulp
-    // Select files
-        .src(path.developmentDir + '/sass/themes/*.scss')
-        // Compile Sass
-        .pipe(sass(
-            {
-                outputStyle: 'expanded'
-            }
-        ))
-        // Add vendor prefixes
-        .pipe(autoprefixer(
-            {
-                browsers: ['last 4 version'],
-                cascade: false
-            }
-        ))
-        // Save unminified file
-        .pipe(gulpif(!demo,gulp.dest(path.base + path.productionDir + '/assets/css/colors')))
-        // Optimize and minify
-        .pipe(cssmin())
-        // Append suffix
-        .pipe(rename({
+    //Select files
+    .src(path.developmentDir + '/sass/themes/*.scss')
+    //Compile Sass
+    .pipe(sass(
+        {
+            outputStyle: 'expanded'
+        }
+    ))
+    //Add vendor prefixes
+    .pipe(autoprefixer(
+        {
+            browsers: ['last 4 version'],
+            cascade: false
+        }
+    ))
+    //Save unminified file
+    .pipe(gulpif(!demo, gulp.dest(path.base + path.productionDir + '/assets/css/colors')))
+    //Optimize and minify
+    .pipe(cssmin())
+    //Append suffix
+    .pipe(rename(
+        {
             suffix: '.min'
-        }))
-        // Save minified file
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/css/colors'));
+        }
+    ))
+    //Save minified file
+    .pipe(gulp.dest(path.base + path.productionDir + '/assets/css/colors'));
 });
 
 /**
@@ -190,26 +201,28 @@ gulp.task('themes', function () {
 
 gulp.task('js', function () {
     return gulp
-    // Select files
-        .src(path.developmentDir + '/babel/script.js')
-        // Concatenate includes
-        .pipe(include())
-        // Transpile
-        .pipe(babel(
-            {
-                presets: [['env', {loose: true, modules: false}]] // 'use-strict' deleted
-            }
-        ))
-        // Save unminified file
-        .pipe(gulpif(!demo,gulp.dest(path.base + path.productionDir + '/assets/js')))
-        // Optimize and minify
-        .pipe(uglify())
-        // Append suffix
-        .pipe(rename({
+    //Select files
+    .src(path.developmentDir + '/babel/script.js')
+    //Concatenate includes
+    .pipe(include())
+    //Transpile
+    .pipe(babel(
+        {
+            presets: [['env', {loose: true, modules: false}]] //'use-strict' deleted
+        }
+    ))
+    //Save unminified file
+    .pipe(gulpif(!demo, gulp.dest(path.base + path.productionDir + '/assets/js')))
+    //Optimize and minify
+    .pipe(uglify())
+    //Append suffix
+    .pipe(rename(
+        {
             suffix: '.min'
-        }))
-        // Save minified file
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/js'));
+        }
+    ))
+    //Save minified file
+    .pipe(gulp.dest(path.base + path.productionDir + '/assets/js'));
 });
 
 /**
@@ -219,12 +232,12 @@ gulp.task('js', function () {
 
 gulp.task('images', function () {
     return gulp
-    // Select files
-        .src(!demo ? path.developmentDir + '/images/prod/**/*' : path.developmentDir + '/images/sample/**/*')
-        // ImageMin
-        .pipe(imagemin())
-        // Save files
-        .pipe(gulpif(!demo,gulp.dest(path.base + path.productionDir + '/assets/img'),gulp.dest(path.base + path.productionDir + '/assets/img/sample')));        
+    //Select files
+    .src(demo ? path.developmentDir + '/images/sample/**/*' : path.developmentDir + '/images/prod/**/*')
+    //ImageMin
+    .pipe(imagemin())
+    //Save files
+    .pipe(gulp.dest(demo ? path.base + path.productionDir + '/assets/img/sample' : path.base + path.productionDir + '/assets/img'))
 });
 
 /**
@@ -234,10 +247,10 @@ gulp.task('images', function () {
 
 gulp.task('vendors', function () {
     return gulp
-    // Select files
-        .src(path.developmentDir + '/vendors/**/*')
-        // Save files
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/vendors'));
+    //Select files
+    .src(path.developmentDir + '/vendors/**/*')
+    //Save files
+    .pipe(gulp.dest(path.base + path.productionDir + '/assets/vendors'));
 });
 
 /**
@@ -247,10 +260,10 @@ gulp.task('vendors', function () {
 
 gulp.task('fonts', function () {
     return gulp
-    // Select files
-        .src(path.developmentDir + '/fonts/*')
-        // Save files
-        .pipe(gulp.dest(path.base + path.productionDir + '/assets/fonts'));
+    //Select files
+    .src(path.developmentDir + '/fonts/*')
+    //Save files
+    .pipe(gulp.dest(path.base + path.productionDir + '/assets/fonts'));
 });
 
 /**
@@ -260,19 +273,21 @@ gulp.task('fonts', function () {
 
 gulp.task('server', function () {
 
-// Create and initialize local server
+    //Create and initialize local server
     bs.create();
-    bs.init({
-        notify: false,
-        server: path.base + path.productionDir,
-        open: 'local',
-        ui: false
-    });
+    bs.init(
+        {
+            notify: false,
+            server: path.base + path.productionDir,
+            open: 'local',
+            ui: false
+        }
+    );
 
-    // Watch for build changes and reload browser
+    //Watch for build changes and reload browser
     bs.watch(path.base + path.productionDir + '/**/*').on('change', bs.reload);
 
-    // Watch for source changes and execute associated tasks
+    //Watch for source changes and execute associated tasks
     watch('./' + path.developmentDir + '/pug/**/*.pug', function () {
         gulp.start('pug');
     });
