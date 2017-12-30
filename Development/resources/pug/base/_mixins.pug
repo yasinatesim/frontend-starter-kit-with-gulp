@@ -15,7 +15,7 @@ mixin lineTab
 
 //- Displaceable Image Mixin with Placeholder
 mixin img(photo,alt)
-  img(src=(!demo ? "assets/img/" + photo : "assets/img/sample/" + photo) alt=alt)
+  img(src=(demo ? "assets/img/sample/" + photo : "assets/img/" + photo) alt=alt)
 
 
 //- Deleted Command Line Mixin
@@ -30,4 +30,3 @@ mixin link(source)
 
 mixin script(source)
   script(src="assets/" + source + (demo ? ".min" : "") + ".js")
-    
