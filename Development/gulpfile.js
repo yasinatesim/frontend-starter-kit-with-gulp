@@ -63,7 +63,6 @@ const   gulp            = require('gulp'),
 */
 
 const gulpSrc = gulp.src;
-
 gulp.src = function onError(...args) {
     return gulpSrc
     .apply(gulp, args)
@@ -108,7 +107,6 @@ gulp.task('pug', function () {
             }
         }
     ))
-
     //HTML Beautify
     .pipe(gulpif(!demo, 
         prettify(
@@ -119,7 +117,6 @@ gulp.task('pug', function () {
             }
         )
     ))
-
     //Save files
     .pipe(gulp.dest(path.base + path.productionDir));
 });
@@ -148,7 +145,6 @@ gulp.task('sass', function () {
             cascade: false
         }
     ))
-
     //Save unminified file
     .pipe(gulpif(!demo, gulp.dest(path.base + path.productionDir + '/assets/css')))
     //Optimize and minify
@@ -297,9 +293,6 @@ gulp.task('server', function () {
             file: "index.html"
         }
     )
-
-    //Watch for build changes and reload browser
-    bs.watch(path.base + path.productionDir + '/**/*').on('change', bs.reload);
 
     //Watch for source changes and execute associated tasks
     watch('./' + path.developmentDir + '/pug/**/*.pug', function () {
