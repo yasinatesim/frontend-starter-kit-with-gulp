@@ -38,7 +38,7 @@ const   gulp            = require('gulp'),
 
 /* ========================= Compaile & Server ========================= */
         watch           = require('gulp-watch'),
-        cache           = require('gulp-cahed'),
+        cache           = require('gulp-cached'),
         del             = require('del'),
         gulpif          = require('gulp-if'),
         sequence        = require('run-sequence'),
