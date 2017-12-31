@@ -5,13 +5,12 @@
 
 /**
 * If 'npm install' not working!
-* npm install babel-core babel-preset-env browser-sync del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-if gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util gulp-watch run-sequence --save-dev
+* npm install babel-core babel-preset-env del gulp gulp-autoprefixer gulp-babel gulp-cached gulp-cssmin gulp-if gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util live-server run-sequence --save-dev
 * -----------------------------------------------------------------------------
 */
 
 /* ========================= Gulp ========================= */
 const   gulp            = require('gulp'),
-        gutil           = require('gulp-util'),
 
 /* ========================= Pug ========================= */
         pug             = require('gulp-pug'),
@@ -34,6 +33,7 @@ const   gulp            = require('gulp'),
         include         = require('gulp-include'),
 
 /* ========================= Eror Reporting ========================= */
+        gutil           = require('gulp-util'),
         plumber         = require('gulp-plumber'),
 
 /* ========================= Compaile & Server ========================= */
@@ -41,8 +41,8 @@ const   gulp            = require('gulp'),
         cache           = require('gulp-cached'),
         del             = require('del'),
         gulpif          = require('gulp-if'),
-        sequence        = require('run-sequence'),
-        bs              = require('browser-sync'),
+        sequence        = require('run-sequence'),      
+        liveServer      = require("live-server"),
 
 /**
 * Output Css & Js File Name and Set Paths
@@ -289,15 +289,14 @@ gulp.task('fonts', function () {
 gulp.task('server', function () {
 
     //Create and initialize local server
-    bs.create();
-    bs.init(
+    liveServer.start(
         {
-            notify: false,
-            server: path.base + path.productionDir,
-            open: 'local',
-            ui: false
+            port: 3000,
+            host: "127.0.0.1",
+            root: path.base + path.productionDir,         
+            file: "index.html"
         }
-    );
+    )
 
     //Watch for build changes and reload browser
     bs.watch(path.base + path.productionDir + '/**/*').on('change', bs.reload);
