@@ -230,8 +230,6 @@ gulp.task('images', function () {
     return gulp
     //Select files
     .src(demo ? path.developmentDir + '/images/sample/**/*' : path.developmentDir + '/images/prod/**/*')
-    //Only modified modify files
-    .pipe(cache(demo ? path.base + path.productionDir + '/assets/img/sample' : path.base + path.productionDir + '/assets/img'))
     //ImageMin
     .pipe(imagemin())
     //Save files
