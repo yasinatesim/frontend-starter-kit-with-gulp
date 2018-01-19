@@ -38,7 +38,6 @@ const   gulp            = require('gulp'),
 
 /* ========================= Compaile & Server ========================= */
         watch           = require('gulp-watch'),
-        cache           = require('gulp-cached'),
         del             = require('del'),
         gulpif          = require('gulp-if'),
         sequence        = require('run-sequence'),      
@@ -96,8 +95,6 @@ gulp.task('pug', function () {
     return gulp
     //Select files
     .src(path.developmentDir + '/pug/*.pug')
-    //Only modified modify files
-    .pipe(cache(path.base + path.productionDir))
     //Compile Pug
     .pipe(pug(
         {
@@ -130,8 +127,6 @@ gulp.task('sass', function () {
     return gulp
     //Select files
     .src(path.developmentDir + '/sass/*.scss')
-    //Only modified modify files
-    .pipe(cache(path.base + path.productionDir + '/assets/css'))
     //Compile Sass
     .pipe(sass(
         {
@@ -168,8 +163,6 @@ gulp.task('themes', function () {
     return gulp
     //Select files
     .src(path.developmentDir + '/sass/themes/*.scss')
-    //Only modified modify files
-    .pipe(cache(path.base + path.productionDir + '/assets/css/colors'))
     //Compile Sass
     .pipe(sass(
         {
@@ -206,8 +199,6 @@ gulp.task('js', function () {
     return gulp
     //Select files
     .src(path.developmentDir + '/babel/*.js')
-    //Only modified modify files
-    .pipe(cache(path.base + path.productionDir + '/assets/js'))
     //Concatenate includes
     .pipe(include())
     //Transpile
@@ -256,8 +247,6 @@ gulp.task('vendors', function () {
     return gulp
     //Select files
     .src(path.developmentDir + '/vendors/**/*')
-    //Only modified modify files
-    .pipe(cache(path.base + path.productionDir + '/assets/vendors'))
     //Save files
     .pipe(gulp.dest(path.base + path.productionDir + '/assets/vendors'));
 });
@@ -271,8 +260,6 @@ gulp.task('fonts', function () {
     return gulp
     //Select files
     .src(path.developmentDir + '/fonts/*')
-    //Only modified modify files
-    .pipe(cache(path.base + path.productionDir + '/assets/fonts'))
     //Save files
     .pipe(gulp.dest(path.base + path.productionDir + '/assets/fonts'));
 });
