@@ -5,7 +5,7 @@
 
 /**
 * If 'npm install' not working!
-* npm install babel-core babel-preset-env del gulp gulp-autoprefixer gulp-babel gulp-cached gulp-cssmin gulp-if gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util live-server run-sequence --save-dev
+* npm install babel-core babel-preset-env del gulp gulp-autoprefixer gulp-babel gulp-cssmin gulp-if gulp-imagemin gulp-include gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util live-server run-sequence --save-dev
 * -----------------------------------------------------------------------------
 */
 
@@ -40,7 +40,7 @@ const   gulp            = require('gulp'),
         watch           = require('gulp-watch'),
         del             = require('del'),
         gulpif          = require('gulp-if'),
-        sequence        = require('run-sequence'),      
+        sequence        = require('run-sequence'),
         liveServer      = require("live-server"),
 
 /**
@@ -48,8 +48,8 @@ const   gulp            = require('gulp'),
 * -----------------------------------------------------------------------------
 */
 
-        demo = true, //Minified file include 
-        ThemeName = 'theme',
+        demo = true, //Minified file include
+        ThemeName = 'Startk UI Kit',
         path = {
             base: '../',
             developmentDir: 'resources',
@@ -79,7 +79,7 @@ gulp.src = function onError(...args) {
  */
 
 gulp.task('clean', function () {
-    return del(path.base + path.productionDir, 
+    return del(path.base + path.productionDir,
         {
             force: true
         }
@@ -105,7 +105,7 @@ gulp.task('pug', function () {
         }
     ))
     //HTML Beautify
-    .pipe(gulpif(!demo, 
+    .pipe(gulpif(!demo,
         prettify(
             {
                 indent_size: 4,
@@ -274,7 +274,7 @@ gulp.task('server', function () {
         {
             port: 3000,
             host: "127.0.0.1",
-            root: path.base + path.productionDir,         
+            root: path.base + path.productionDir,
             file: "index.html"
         }
     )
