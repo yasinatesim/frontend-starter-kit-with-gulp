@@ -49,7 +49,7 @@ const   gulp            = require('gulp'),
 */
 
         demo = true, //Minified file include
-        ThemeName = 'Startk UI Kit',
+        ThemeName = 'theme',
         path = {
             base: '../',
             developmentDir: 'resources',
