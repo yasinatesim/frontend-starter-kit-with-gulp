@@ -37,7 +37,6 @@ const   gulp            = require('gulp'),
         plumber         = require('gulp-plumber'),
 
 /* ========================= Compaile & Server ========================= */
-        watch           = require('gulp-watch'),
         del             = require('del'),
         gulpif          = require('gulp-if'),
         sequence        = require('run-sequence'),
@@ -61,17 +60,14 @@ const   gulp            = require('gulp'),
 * -----------------------------------------------------------------------------
 */
 
-const gulpSrc = gulp.src;
-gulp.src = function onError(...args) {
-    return gulpSrc
-    .apply(gulp, args)
+function errorReporting() {
     //Catch errors
-    .pipe(plumber(function onError(error) {
+    return plumber(function onError(error) {
             gutil.log(gutil.colors.bgRed("Error (" + error.plugin + "):" + error.message));
             this.emit('end');
         }
-    ));
-};
+    );
+}
 
 /**
  * Delete the productionDir directory
@@ -92,9 +88,10 @@ gulp.task('clean', function () {
  */
 
 gulp.task('pug', function () {
-    return gulp
     //Select files
-    .src(path.developmentDir + '/pug/*.pug')
+    return gulp.src(path.developmentDir + '/pug/*.pug')
+    //Error Reporting
+    .pipe(errorReporting())
     //Compile Pug
     .pipe(pug(
         {
@@ -124,9 +121,10 @@ gulp.task('pug', function () {
  */
 
 gulp.task('sass', function () {
-    return gulp
     //Select files
-    .src(path.developmentDir + '/sass/*.scss')
+    return gulp.src(path.developmentDir + '/sass/*.scss')
+    //Error Reporting
+    .pipe(errorReporting())
     //Compile Sass
     .pipe(sass(
         {
@@ -160,9 +158,10 @@ gulp.task('sass', function () {
  */
 
 gulp.task('themes', function () {
-    return gulp
     //Select files
-    .src(path.developmentDir + '/sass/themes/*.scss')
+    return gulp.src(path.developmentDir + '/sass/themes/*.scss')
+    //Error Reporting
+    .pipe(errorReporting())
     //Compile Sass
     .pipe(sass(
         {
@@ -196,9 +195,10 @@ gulp.task('themes', function () {
  */
 
 gulp.task('js', function () {
-    return gulp
     //Select files
-    .src(path.developmentDir + '/babel/*.js')
+    return gulp.src(path.developmentDir + '/babel/*.js')
+    //Error Reporting
+    .pipe(errorReporting())
     //Concatenate includes
     .pipe(include())
     //Transpile
@@ -227,9 +227,10 @@ gulp.task('js', function () {
  */
 
 gulp.task('images', function () {
-    return gulp
     //Select files
-    .src(demo ? path.developmentDir + '/images/sample/**/*' : path.developmentDir + '/images/prod/**/*')
+    return gulp.src(demo ? path.developmentDir + '/images/sample/**/*' : path.developmentDir + '/images/prod/**/*')
+    //Error Reporting
+    .pipe(errorReporting())
     //ImageMin
     .pipe(imagemin())
     //Save files
@@ -242,9 +243,10 @@ gulp.task('images', function () {
  */
 
 gulp.task('vendors', function () {
-    return gulp
     //Select files
-    .src(path.developmentDir + '/vendors/**/*')
+    return gulp.src(path.developmentDir + '/vendors/**/*')
+    //Error Reporting
+    .pipe(errorReporting())
     //Save files
     .pipe(gulp.dest(path.base + path.productionDir + '/assets/vendors'));
 });
@@ -255,9 +257,10 @@ gulp.task('vendors', function () {
  */
 
 gulp.task('fonts', function () {
-    return gulp
     //Select files
-    .src(path.developmentDir + '/fonts/*')
+    return gulp.src(path.developmentDir + '/fonts/*')
+    //Error Reporting
+    .pipe(errorReporting())
     //Save files
     .pipe(gulp.dest(path.base + path.productionDir + '/assets/fonts'));
 });
@@ -277,37 +280,16 @@ gulp.task('server', function () {
             root: path.base + path.productionDir,
             file: "index.html"
         }
-    )
+    );
 
     //Watch for source changes and execute associated tasks
-    watch('./' + path.developmentDir + '/pug/**/*.pug', function () {
-        gulp.start('pug');
-    });
-
-    watch(['./' + path.developmentDir + '/sass/**/*.scss', '!./' + path.developmentDir + '/sass/themes/*.scss'], function () {
-        gulp.start('sass');
-    });
-
-    watch('./' + path.developmentDir + '/sass/themes/*.scss', function () {
-        gulp.start('themes');
-    });
-
-    watch('./' + path.developmentDir + '/babel/**/*.js', function () {
-        gulp.start('js');
-    });
-
-    watch('./' + path.developmentDir + '/images/**/*', function () {
-        gulp.start('images');
-    });
-
-    watch('./' + path.developmentDir + '/vendors/**/*', function () {
-        gulp.start('vendors');
-    });
-
-    watch('./' + path.developmentDir + '/fonts/*', function () {
-        gulp.start('fonts');
-    });
-
+    gulp.watch(path.developmentDir + '/pug/**/*.pug',['pug']);
+    gulp.watch([path.developmentDir + '/sass/**/*.scss', '!' + path.developmentDir + '/sass/themes/*.scss'],['sass']);
+    gulp.watch(path.developmentDir + '/sass/themes/*.scss',['themes']);    
+    gulp.watch(path.developmentDir + '/babel/**/*.js',['js']);    
+    gulp.watch(path.developmentDir + '/images/**/*',['images']);    
+    gulp.watch(path.developmentDir + '/vendors/**/*',['vendors']);    
+    gulp.watch(path.developmentDir + '/fonts/*',['fonts']);
 });
 
 /**
