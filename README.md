@@ -31,8 +31,8 @@ Run: `npm start`
 	│    │   ├── images
 	│    │   ├── fonts
 	│    │   ├── vendors
-	│    ├ gulpfile.js // In "ThemeName" const: Output Js and Css File Name   
-    
+	│    ├ gulpfile.js
+	
  ### Product folder after gulp is worked
  
     ├ "ThemeName" HTML // In gulpfile.js "ThemeName" const with to capitalize & This Folder Name
