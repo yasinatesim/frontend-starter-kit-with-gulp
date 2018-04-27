@@ -284,8 +284,8 @@ gulp.task('server', function () {
 
     //Watch for source changes and execute associated tasks
     gulp.watch(path.developmentDir + '/pug/**/*.pug',['pug']);
-    gulp.watch([path.developmentDir + '/sass/**/*.scss', '!' + path.developmentDir + '/sass/themes/*.scss'],['sass']);
-    gulp.watch(path.developmentDir + '/sass/themes/*.scss',['themes']);    
+    gulp.watch(path.developmentDir + '/sass/**/*.scss',['sass']);
+    gulp.watch(path.developmentDir + '/themes/**/*.scss',['themes']);    
     gulp.watch(path.developmentDir + '/babel/**/*.js',['js']);    
     gulp.watch(path.developmentDir + '/images/**/*',['images']);    
     gulp.watch(path.developmentDir + '/vendors/**/*',['vendors']);    
