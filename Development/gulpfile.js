@@ -159,7 +159,7 @@ gulp.task('sass', function () {
 
 gulp.task('themes', function () {
     //Select files
-    return gulp.src(path.developmentDir + '/sass/themes/*.scss')
+    return gulp.src(path.developmentDir + '/themes/*.scss')
     //Error Reporting
     .pipe(errorReporting())
     //Compile Sass
