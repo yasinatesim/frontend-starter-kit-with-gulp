@@ -1,0 +1,11 @@
+@mixin backgroundColor($bgColor, $lightText: #fff, $darkText:#000) {
+	background-color: $bgColor;
+
+	@if (lightness($bgColor) > 50) {
+		// lightness($bgColor) > lightness(#999)
+		color: $darkText;
+	}
+	@else {
+		color: $lightText;
+	}
+}

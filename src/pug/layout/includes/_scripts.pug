@@ -1,0 +1,15 @@
++line
++c('Scripts')
++script('jquery')
++script('bootstrap')
++script('app')
+
++c('Color Switcher -- For Demo')
++script('color-switcher',true)
+script.
+	var colorSheets = [
+		{color: "#f00",title: "Switch to Red",href: "assets/css/colors/red.min.css"},
+		{color: "#0f0",title: "Switch to Green",href: "assets/css/colors/green.min.css"},
+		{color: "#00f",title: "Switch to Blue",href: "assets/css/colors/blue.min.css"}
+	];
+	ColorSwitcher.init(colorSheets);

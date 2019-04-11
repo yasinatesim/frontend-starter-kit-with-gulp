@@ -1,0 +1,7 @@
+@mixin changeFontSize($fontSize, $width: "xlarge") {
+	font-size: #{$fontSize / 2}px;
+
+	@include mq($width) {
+		font-size: #{$fontSize}px;
+	}
+}
