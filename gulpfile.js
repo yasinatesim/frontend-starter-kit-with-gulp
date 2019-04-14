@@ -5,7 +5,7 @@
 
 /**
  * If 'npm install' not working!
- * npm install   --save-dev
+ * npm install babel-core babel-preset-env browser-sync del gulp@3.9.1 gulp-autoprefixer gulp-babel@7 gulp-clean-css gulp-group-css-media-queries gulp-if gulp-imagemin gulp-include gulp-newer gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util run-sequence --save-dev
  * -----------------------------------------------------------------------------
  */
 
@@ -48,10 +48,10 @@ const gulp = require('gulp'),
 	 * Output Css & Js File Name and Set Paths
 	 * -----------------------------------------------------------------------------
 	 */
-	isTheme = true, //For ThemeForest Themes
+	isTheme = false, //For ThemeForest Themes
 	demo = false, //Minified file include
 
-	ThemeName = 'theme',
+	ThemeName = 'Mi Furniture',
 	path = {
 		base: './',
 		developmentDir: 'src',
@@ -380,5 +380,8 @@ gulp.task('server', () => {
  * Default Task
  * -----------------------------------------------------------------------------
  */
-
-gulp.task('default', (callback) => sequence(['clean'], ['pug'], ['sass:vendors'], ['sass'], [isTheme ? 'sass:themes' : null], ['js:vendors'], ['js'], ['images'], ['server'], callback));
+if (isTheme) {
+	gulp.task('default', (callback) => sequence(['clean'], ['pug'], ['sass:vendors'], ['sass'], ['sass:themes'], ['js:vendors'], ['js'], ['images'], ['server'], callback));
+} else {
+	gulp.task('default', (callback) => sequence(['clean'], ['pug'], ['sass:vendors'], ['sass'], ['js:vendors'], ['js'], ['images'], ['server'], callback));
+}
