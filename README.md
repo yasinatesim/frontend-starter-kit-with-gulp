@@ -9,3 +9,5 @@ Run: `npm install`
 ## Server
 
 Run: `npm start`
+
+> CLI Version: [create-theme](https://www.npmjs.com/package/create-theme)
