@@ -12,7 +12,7 @@ Front End Starter Kit is an opinionated build automation for front-end web devel
 - Sass compilation with [gulp-sass](https://www.npmjs.com/package/gulp-sass)
 - Es6 transpilation with [gulp-babel](https://www.npmjs.com/package/gulp-babel)
 - Auto-refresh browser with [browser sync](https://www.npmjs.com/package/browser-sync)
-- Minification in production ([Clean CSS](https://www.npmjs.com/package/gulp-clean-css) and [Uglify](https://www.npmjs.com/package/gulp-uglify))
+- Minification ([Clean CSS](https://www.npmjs.com/package/gulp-clean-css) and [Uglify](https://www.npmjs.com/package/gulp-uglify))
 - Autoprefix CSS with [Autoprefixer](https://www.npmjs.com/package/gulp-autoprefixer)
 - Better error messages in gulp with [Plumber](https://www.npmjs.com/package/gulp-plumber)
 - Compress images with [Image min](https://www.npmjs.com/package/gulp-imagemin)
