@@ -1,6 +1,6 @@
 //- Displaceable Image Mixin with Placeholder
 mixin img(photo,alt)
-	if isTheme
+	if isThemeforestTheme
 		img(src=(demo ? "assets/img/sample/" + photo : "assets/img/" + photo) alt=alt)
 	else
 		img(src="assets/img/" + photo alt=alt)

@@ -1,34 +1,75 @@
 {
-  "name": "front-end-starter-kit-with-gulp",
-  "version": "2.0.0",
-  "description": "",
-  "main": "gulpfile.js",
-  "scripts": {
-    "start": "gulp"
-  },
-  "author": "Yasin ATEŞ",
-  "license": "MIT",
-  "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "browser-sync": "^2.26.3",
-    "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^6.0.0",
-    "gulp-babel": "^7.0.1",
-    "gulp-clean-css": "^4.0.0",
-    "gulp-group-css-media-queries": "^1.2.2",
-    "gulp-if": "^2.0.2",
-    "gulp-imagemin": "^4.1.0",
-    "gulp-include": "^2.3.1",
-    "gulp-newer": "^1.4.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-prettify": "^0.5.0",
-    "gulp-pug": "^3.3.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8",
-    "run-sequence": "^2.2.0"
-  }
+	"name": "front-end-starter-kit-with-gulp",
+	"version": "2.0.0",
+	"description": "Frontend Starter Kit with Gulp for either Themeforest Projects or customizable projects.",
+	"homepage": "https://www.yasinates.com",
+	"main": "gulpfile.js",
+	"scripts": {
+		"test": "start"
+	},
+	"bugs": {
+		"email": "yasinatesim@gmail.com",
+		"url": "https://github.com/yasinatesim/Front-End-Starter-Kit-with-Gulp/issues"
+	},
+	"keywords": [
+		"gulp",
+		"pug",
+		"sass",
+		"scss",
+		"babel",
+		"es6",
+		"ecmascript6",
+		"es6-javascript",
+		"preprocessor",
+		"frontend",
+		"front-end",
+		"front-end-development",
+		"front-end-webdevelopment",
+		"optimize",
+		"minify",
+		"theme",
+		"theme-development",
+		"theme",
+		"themeforest",
+		"starter-kit"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/yasinatesim/Front-End-Starter-Kit-with-Gulp"
+	},
+	"author": {
+		"name": "Yasin ATEŞ",
+		"email": "yasinatesim@gmail.com",
+		"url": "https://www.yasinates.com"
+	},
+	"license": "MIT",
+	"browserslist": [
+		"last 2 version"
+	],
+	"documentation": "http://onlinedocs.com/themename",
+	"purchase": "theme-themeforest-url",
+	"devDependencies": {
+		"browser-sync": "^2.26.5",
+		"del": "^4.1.0",
+		"gulp": "^4.0.1",
+		"gulp-autoprefixer": "^6.1.0",
+		"gulp-clean-css": "^4.2.0",
+		"gulp-if": "^2.0.2",
+		"gulp-load-plugins": "^1.5.0",
+		"gulp-plumber": "^1.2.1",
+		"gulp-rename": "^1.4.0",
+		"gulp-sass": "^4.0.2",
+		"gulp-size": "^3.0.0",
+		"gulp-util": "^3.0.8",
+		"gulp-newer": "^1.4.0",
+		"gulp-imagemin": "^5.0.3",
+		"gulp-pug": "^4.0.1",
+		"gulp-prettier": "^2.1.0",
+		"gulp-babel": "^7.0.0",
+		"gulp-uglify": "^3.0.2",
+		"gulp-include": "^2.4.1",
+		"babel-core": "^6.26.3",
+		"babel-preset-env": "^1.7.0",
+		"gulp-zip": "^4.2.0"
+	}
 }

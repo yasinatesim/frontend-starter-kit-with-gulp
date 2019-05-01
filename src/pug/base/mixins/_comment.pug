@@ -1,7 +1,10 @@
 //- Comment Line Mixin
 mixin c (comment)
-	if isTheme
-		if !demo
+	- if (isThemeforestTheme) {
+		- if (isProduction) {
 			<!-- #{comment} -->
-	else
+		- }
+	- } else {
 		<!-- #{comment} -->
+	- }
+

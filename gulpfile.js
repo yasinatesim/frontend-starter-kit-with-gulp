@@ -3,59 +3,22 @@
  * -----------------------------------------------------------------------------
  */
 
-/**
- * If 'npm install' not working!
- * npm install babel-core babel-preset-env browser-sync del gulp@3.9.1 gulp-autoprefixer gulp-babel@7 gulp-clean-css gulp-group-css-media-queries gulp-if gulp-imagemin gulp-include gulp-newer gulp-plumber gulp-prettify gulp-pug gulp-rename gulp-sass gulp-uglify gulp-util run-sequence --save-dev
- * -----------------------------------------------------------------------------
- */
+const gulp = require("gulp");
+const gulpLoadPlugins = require("gulp-load-plugins");
+const browserSync = require("browser-sync").create();
+const del = require("del");
 
-/* ========================= Gulp ========================= */
-const gulp = require("gulp"),
-	/* ========================= Pug ========================= */
-	pug = require("gulp-pug"),
-	prettify = require("gulp-prettify"),
-	/* ========================= Sass ========================= */
-	sass = require("gulp-sass"),
-	autoprefixer = require("gulp-autoprefixer"),
-	gcmq = require("gulp-group-css-media-queries"),
-	cssmin = require("gulp-clean-css"),
-	/* ========================= Babel ========================= */
-	babel = require("gulp-babel"),
-	uglify = require("gulp-uglify"),
-	/* ========================= Image ========================= */
-	imagemin = require("gulp-imagemin"),
-	newer = require("gulp-newer"),
-	/* ========================= File Name & Includes ========================= */
-	rename = require("gulp-rename"),
-	include = require("gulp-include"),
-	/* ========================= Eror Reporting ========================= */
-	gutil = require("gulp-util"),
-	plumber = require("gulp-plumber"),
-	/* ========================= Compaile & Server ========================= */
-	del = require("del"),
-	gulpif = require("gulp-if"),
-	sequence = require("run-sequence"),
-	bs = require("browser-sync"),
-	/**
-	 * Output Css & Js File Name and Set Paths
-	 * -----------------------------------------------------------------------------
-	 */
-	isTheme = false, //For ThemeForest Themes
-	demo = false, //Minified file include
-	ThemeName = "Mi Furniture",
-	path = {
-		base: "./",
-		developmentDir: "src",
-		productionDir: isTheme
-			? ThemeName.charAt(0).toUpperCase() + ThemeName.slice(1) + " HTML"
-			: "dist"
-	};
+// plugins load
+const $ = gulpLoadPlugins();
 
-/**
- * Catch stream errors
- * -----------------------------------------------------------------------------
- */
+// auto reload the browser
+const reloadStream = browserSync.reload;
+const reload = done => {
+	browserSync.reload();
+	done();
+};
 
+// catch stream errors
 const gulpSrc = gulp.src;
 
 gulp.src = function onError(...args) {
@@ -64,9 +27,9 @@ gulp.src = function onError(...args) {
 			.apply(gulp, args)
 			// Catch errors
 			.pipe(
-				plumber(function onError(error) {
-					gutil.log(
-						gutil.colors.red(`Error (${error.plugin}):${error.message}`)
+				$.plumber(function onError(error) {
+					$.util.log(
+						$.util.colors.red(`Error (${error.plugin}):${error.message}`)
 					);
 					this.emit("end");
 				})
@@ -74,540 +37,426 @@ gulp.src = function onError(...args) {
 	);
 };
 
+// package data
+const pkg = require("./package.json");
+
+// for themeforest theme
+const isThemeforestTheme = false;
+
+// if production mode is active. -> false: developement mode
+const isProduction = false;
+
+// if minified file included in production
+const minifiedFileInclude = false;
+
+// Project Path
+const srcRoot = "src";
+const src = {
+	views: `${srcRoot}/pug`,
+	styles: `${srcRoot}/sass`,
+	stylesColors: `${srcRoot}/sass/themes`,
+	stylesVendors: `${srcRoot}/sass/vendors`,
+	scripts: `${srcRoot}/js`,
+	scriptsVendors: `${srcRoot}/js/vendors`,
+	images: `${srcRoot}/img`
+};
+
+// Distribution Path
+const tmpRoot = ".tmp";
+const distRoot = isThemeforestTheme ? `${pkg.name}-v${pkg.version}` : "dist";
+const dist = {
+	views: isProduction ? `${distRoot}` : `${tmpRoot}`,
+	styles: isProduction ? `${distRoot}/assets/css` : `${tmpRoot}/assets/css`,
+	stylesColors: isProduction
+		? `${distRoot}/assets/css/colors`
+		: `${tmpRoot}/assets/css/colors`,
+	stylesVendors: isProduction
+		? `${distRoot}/assets/css/vendors`
+		: `${tmpRoot}/assets/css/vendors`,
+	scripts: isProduction ? `${distRoot}/assets/js` : `${tmpRoot}/assets/js`,
+	scriptsVendors: isProduction
+		? `${distRoot}/assets/js/vendors`
+		: `${tmpRoot}/assets/js/vendors`,
+	images: isProduction ? `${distRoot}/assets/img` : `${tmpRoot}/assets/img`
+};
+
 /**
- * Delete the productionDir directory
- * -----------------------------------------------------------------------------
+ * Builds
+ * ================================================================
  */
 
-gulp.task("clean", () => {
-	if (isTheme) {
-		return del(`${path.base}${path.productionDir}`, {
-			force: true
-		});
-	} else {
-		return del(
-			[
-				`${path.base}${path.developmentDir}/images/prod`,
-				`${path.base}${path.developmentDir}/images/sample`,
-				`${path.base}${path.productionDir}`
-			],
-			{
-				force: true
-			}
-		);
-	}
-});
+// html
 
-/**
- * Build pug with Pug
- * -----------------------------------------------------------------------------
- */
-
-gulp.task("pug", () => {
-	//Select files
-	return (
-		gulp
-			.src(`${path.base}${path.developmentDir}/pug/*.pug`)
-			//Compile Pug
-			.pipe(
-				pug({
-					pretty: !demo,
-					data: {
-						demo: demo,
-						isTheme: isTheme
-					}
+gulp.task("views", () =>
+	gulp
+		.src(`${src.views}/*.pug`)
+		.pipe(
+			$.pug({
+				pretty:
+					(isThemeforestTheme && isProduction) || !isThemeforestTheme
+						? true
+						: false,
+				data: {
+					isProduction: isProduction,
+					isThemeforestTheme: isThemeforestTheme
+				}
+			})
+		)
+		.pipe(
+			$.if(
+				(isThemeforestTheme && isProduction) || !isThemeforestTheme,
+				$.prettier({
+					printWidth: 300,
+					tabWidth: 4,
+					useTabs: true
 				})
 			)
-			//HTML Beautify
+		)
+		.pipe(gulp.dest(`${dist.views}`))
+		.pipe(reloadStream({ stream: true }))
+);
+
+// styles
+
+gulp.task("style", () => {
+	let stream = gulp
+		.src(`${src.styles}/*.scss`)
+		.pipe($.sass())
+		.pipe(
+			$.sass
+				.sync({
+					outputStyle: "expanded",
+					precision: 6,
+					includePaths: ["."]
+				})
+				.on("error", $.sass.logError)
+		)
+		.pipe(
+			$.autoprefixer({
+				browsers: pkg.browserslist
+			})
+		);
+
+	if (isProduction) {
+		if (minifiedFileInclude) {
+			stream = stream
+				.pipe(gulp.dest(dist.styles))
+				.pipe($.cleanCss())
+				.pipe($.rename({ suffix: ".min" }));
+		}
+	} else {
+		stream = stream
+			.pipe($.cleanCss())
+			.pipe($.rename({ suffix: ".min" }))
 			.pipe(
-				gulpif(
-					!demo,
-					prettify({
-						indent_size: 4,
-						unformatted: ["pre", "code"],
-						preserve_newlines: true
-					})
-				)
-			)
-			//Save files
-			.pipe(gulp.dest(`${path.base}${path.productionDir}`))
-			//Browser sync stream
-			.pipe(bs.stream())
-	);
-});
-
-/**
- * Build styles with SASS
- * -----------------------------------------------------------------------------
- */
-
-gulp.task("sass", () => {
-	if (demo) {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/sass/*.scss`)
-				//Compile Sass
-				.pipe(
-					sass({
-						outputStyle: "expanded"
-					})
-				)
-				//Add vendor prefixes
-				.pipe(
-					autoprefixer({
-						browsers: ["last 4 version"],
-						cascade: false
-					})
-				)
-				//Concat media queries
-				.pipe(gulpif(!isTheme, gcmq()))
-				//Optimize and minify
-				.pipe(cssmin())
-				//Append suffix
-				.pipe(
-					rename({
-						suffix: ".min"
-					})
-				)
-				//Save minified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/css`))
-				//Browser sync stream
-				.pipe(bs.stream())
-		);
-	} else {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/sass/*.scss`)
-				//Compile Sass
-				.pipe(
-					sass({
-						outputStyle: "expanded"
-					})
-				)
-				//Add vendor prefixes
-				.pipe(
-					autoprefixer({
-						browsers: ["last 4 version"],
-						cascade: false
-					})
-				)
-				//Concat media queries
-				.pipe(gulpif(!isTheme, gcmq()))
-				//Save unminified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/css`))
-				//Browser sync stream
-				.pipe(bs.stream())
-		);
+				$.size({
+					showFiles: true
+				})
+			);
 	}
+	stream = stream
+		.pipe(gulp.dest(dist.styles))
+		.pipe(reloadStream({ stream: true }));
+	return stream;
 });
 
-/**
- * Build vendors styles with SASS
- * -----------------------------------------------------------------------------
- */
-
-gulp.task("sass:vendors", () => {
-	if (demo) {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/sass/vendors/*.scss`)
-				//Compile Sass
-				.pipe(
-					sass({
-						outputStyle: "expanded"
-					})
-				)
-				//Add vendor prefixes
-				.pipe(
-					autoprefixer({
-						browsers: ["last 4 version"],
-						cascade: false
-					})
-				)
-				//Concat media queries
-				.pipe(gulpif(!isTheme, gcmq()))
-				//Optimize and minify
-				.pipe(cssmin())
-				//Append suffix
-				.pipe(
-					rename({
-						suffix: ".min"
-					})
-				)
-				//Save minified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/css/vendors`))
-				//Browser sync stream
-				.pipe(bs.stream())
+gulp.task("style:theme", () => {
+	let stream = gulp
+		.src(`${src.stylesColors}/*.scss`)
+		.pipe($.sass())
+		.pipe(
+			$.sass
+				.sync({
+					outputStyle: "expanded",
+					precision: 6,
+					includePaths: ["."]
+				})
+				.on("error", $.sass.logError)
+		)
+		.pipe(
+			$.autoprefixer({
+				browsers: pkg.browserslist
+			})
 		);
+
+	if (isProduction) {
+		if (minifiedFileInclude) {
+			stream = stream
+				.pipe(gulp.dest(dist.stylesColors))
+				.pipe($.cleanCss())
+				.pipe($.rename({ suffix: ".min" }));
+		}
 	} else {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/sass/vendors/*.scss`)
-				//Compile Sass
-				.pipe(
-					sass({
-						outputStyle: "expanded"
-					})
-				)
-				//Add vendor prefixes
-				.pipe(
-					autoprefixer({
-						browsers: ["last 4 version"],
-						cascade: false
-					})
-				)
-				//Concat media queries
-				.pipe(gulpif(!isTheme, gcmq()))
-				//Save unminified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/css/vendors`))
-				//Browser sync stream
-				.pipe(bs.stream())
-		);
+		stream = stream
+			.pipe($.cleanCss())
+			.pipe($.rename({ suffix: ".min" }))
+			.pipe(
+				$.size({
+					showFiles: true
+				})
+			);
 	}
+	stream = stream
+		.pipe(gulp.dest(dist.stylesColors))
+		.pipe(reloadStream({ stream: true }));
+	return stream;
 });
 
-/**
- * Build themes styles with SASS
- * -----------------------------------------------------------------------------
- */
-
-gulp.task("sass:themes", () => {
-	if (demo) {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/sass/themes/*.scss`)
-				//Compile Sass
-				.pipe(
-					sass({
-						outputStyle: "expanded"
-					})
-				)
-				//Add vendor prefixes
-				.pipe(
-					autoprefixer({
-						browsers: ["last 4 version"],
-						cascade: false
-					})
-				)
-				//Concat media queries
-				.pipe(gulpif(!isTheme, gcmq()))
-				//Optimize and minify
-				.pipe(cssmin())
-				//Append suffix
-				.pipe(
-					rename({
-						suffix: ".min"
-					})
-				)
-				//Save minified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/css/colors`))
-				//Browser sync stream
-				.pipe(bs.stream())
+gulp.task("style:vendors", () => {
+	let stream = gulp
+		.src(`${src.stylesVendors}/*.scss`)
+		.pipe($.sass())
+		.pipe(
+			$.sass
+				.sync({
+					outputStyle: "expanded",
+					precision: 6,
+					includePaths: ["."]
+				})
+				.on("error", $.sass.logError)
+		)
+		.pipe(
+			$.autoprefixer({
+				browsers: pkg.browserslist
+			})
 		);
+
+	if (isProduction) {
+		if (minifiedFileInclude) {
+			stream = stream
+				.pipe(gulp.dest(dist.stylesVendors))
+				.pipe($.cleanCss())
+				.pipe($.rename({ suffix: ".min" }));
+		}
 	} else {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/sass/themes/*.scss`)
-				//Compile Sass
-				.pipe(
-					sass({
-						outputStyle: "expanded"
-					})
-				)
-				//Add vendor prefixes
-				.pipe(
-					autoprefixer({
-						browsers: ["last 4 version"],
-						cascade: false
-					})
-				)
-				//Concat media queries
-				.pipe(gulpif(!isTheme, gcmq()))
-				//Save unminified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/css/colors`))
-				//Browser sync stream
-				.pipe(bs.stream())
-		);
+		stream = stream
+			.pipe($.cleanCss())
+			.pipe($.rename({ suffix: ".min" }))
+			.pipe(
+				$.size({
+					showFiles: true
+				})
+			);
 	}
+	stream = stream
+		.pipe(gulp.dest(dist.stylesVendors))
+		.pipe(reloadStream({ stream: true }));
+	return stream;
 });
 
-/**
- * Build scripts with ES6/Babel
- * -----------------------------------------------------------------------------
- */
+gulp.task("styles", gulp.series("style", "style:theme", "style:vendors"));
 
-gulp.task("js", () => {
-	if (demo) {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/js/*.js`)
-				//Concatenate includes
-				.pipe(include())
-				//Transpile
-				.pipe(
-					babel({
-						presets: [["env", { loose: true, modules: false }]] //'use-strict' deleted
-					})
-				)
-				//Optimize and minify
-				.pipe(uglify())
-				//Append suffix
-				.pipe(
-					rename({
-						suffix: ".min"
-					})
-				)
-				//Save minified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/js`))
-				//Browser sync stream
-				.pipe(bs.stream())
+// scripts
+
+gulp.task("script", () => {
+	let stream = gulp
+		.src(`${src.scripts}/*.js`)
+		.pipe($.include())
+		.pipe(
+			$.babel({
+				presets: [["env", { loose: true, modules: false }]] //'use-strict' deleted
+			})
 		);
+
+	if (isProduction) {
+		if (minifiedFileInclude) {
+			stream = stream
+				.pipe(gulp.dest(dist.scripts))
+				.pipe($.uglify())
+				.pipe($.rename({ suffix: ".min" }));
+		}
 	} else {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/js/*.js`)
-				//Concatenate includes
-				.pipe(include())
-				//Transpile
-				.pipe(
-					babel({
-						presets: [["env", { loose: true, modules: false }]] //'use-strict' deleted
-					})
-				)
-				//Save unminified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/js`))
-				//Browser sync stream
-				.pipe(bs.stream())
-		);
+		stream = stream
+			.pipe($.uglify())
+			.pipe($.rename({ suffix: ".min" }))
+			.pipe(
+				$.size({
+					showFiles: true
+				})
+			);
 	}
+	stream = stream
+		.pipe(gulp.dest(dist.scripts))
+		.pipe(reloadStream({ stream: true }));
+	return stream;
 });
 
-/**
- * Build vendors scripts with ES6/Babel
- * -----------------------------------------------------------------------------
- */
-
-gulp.task("js:vendors", () => {
-	if (demo) {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/js/vendors/*.js`)
-				//Concatenate includes
-				.pipe(include())
-				//Transpile
-				.pipe(
-					babel({
-						presets: [["env", { loose: true, modules: false }]] //'use-strict' deleted
-					})
-				)
-				//Optimize and minify
-				.pipe(uglify())
-				//Append suffix
-				.pipe(
-					rename({
-						suffix: ".min"
-					})
-				)
-				//Save minified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/js/vendors`))
-				//Browser sync stream
-				.pipe(bs.stream())
+gulp.task("script:vendors", () => {
+	let stream = gulp
+		.src(`${src.scriptsVendors}/*.js`)
+		.pipe($.include())
+		.pipe(
+			$.babel({
+				presets: [["env", { loose: true, modules: false }]] //'use-strict' deleted
+			})
 		);
+
+	if (isProduction) {
+		if (minifiedFileInclude) {
+			stream = stream
+				.pipe(gulp.dest(dist.scriptsVendors))
+				.pipe($.uglify())
+				.pipe($.rename({ suffix: ".min" }));
+		}
 	} else {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/js/vendors/*.js`)
-				//Concatenate includes
-				.pipe(include())
-				//Transpile
-				.pipe(
-					babel({
-						presets: [["env", { loose: true, modules: false }]] //'use-strict' deleted
-					})
-				)
-				//Save unminified file
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/js/vendors`))
-				//Browser sync stream
-				.pipe(bs.stream())
-		);
+		stream = stream
+			.pipe($.uglify())
+			.pipe($.rename({ suffix: ".min" }))
+			.pipe(
+				$.size({
+					showFiles: true
+				})
+			);
 	}
+	stream = stream
+		.pipe(gulp.dest(dist.scriptsVendors))
+		.pipe(reloadStream({ stream: true }));
+	return stream;
 });
 
-/**
- * Copy image files
- * -----------------------------------------------------------------------------
- */
+gulp.task("scripts", gulp.series("script", "script:vendors"));
+
+// images
 
 gulp.task("images", () => {
-	if (isTheme) {
-		//Select files
-		return (
-			gulp
-				.src(
-					demo
-						? `${path.base}${path.developmentDir}/images/sample/**/*`
-						: `${path.base}${path.developmentDir}/images/prod/**/*`
-				)
-				.pipe(
-					newer(
-						demo
-							? `${path.base}${path.productionDir}/assets/img/sample`
-							: `${path.base}${path.productionDir}/assets/img`
-					)
-				)
-				//Image optimize and minify
-				.pipe(
-					imagemin([
-						imagemin.gifsicle({
-							interlaced: true
-						}),
-						imagemin.jpegtran({
-							progressive: true
-						}),
-						imagemin.optipng({
-							optimizationLevel: 5
-						}),
-						imagemin.svgo({
-							plugins: [
-								{
-									removeViewBox: false
-								},
-								{
-									cleanupIDs: false
-								}
-							]
-						})
-					])
-				)
-				//Save files
-				.pipe(
-					gulp.dest(
-						demo
-							? `${path.base}${path.productionDir}/assets/img/sample`
-							: `${path.base}${path.productionDir}/assets/img`
-					)
-				)
-				//Browser sync stream
-				.pipe(bs.stream())
-		);
+	let stream;
+	if (isThemeforestTheme) {
+		stream = gulp
+			.src(
+				!isProduction ? `${src.images}/sample/**/*` : `${src.images}/prod/**/*`
+			)
+			.pipe($.newer(!isProduction ? `${dist.images}/sample` : `${dist.images}`))
+			.pipe(
+				$.imagemin([
+					$.imagemin.gifsicle({
+						interlaced: true
+					}),
+					$.imagemin.jpegtran({
+						progressive: true
+					}),
+					$.imagemin.optipng({
+						optimizationLevel: 5
+					}),
+					$.imagemin.svgo({
+						plugins: [
+							{
+								removeViewBox: false
+							},
+							{
+								cleanupIDs: false
+							}
+						]
+					})
+				])
+			)
+			.pipe(
+				gulp.dest(!isProduction ? `${dist.images}/sample` : `${dist.images}`)
+			);
 	} else {
-		//Select files
-		return (
-			gulp
-				.src(`${path.base}${path.developmentDir}/images/**/*`)
-				.pipe(newer(`${path.productionDir}/assets/img`))
-				//Image optimize and minify
-				.pipe(
-					imagemin([
-						imagemin.gifsicle({
-							interlaced: true
-						}),
-						imagemin.jpegtran({
-							progressive: true
-						}),
-						imagemin.optipng({
-							optimizationLevel: 5
-						}),
-						imagemin.svgo({
-							plugins: [
-								{
-									removeViewBox: false
-								},
-								{
-									cleanupIDs: false
-								}
-							]
-						})
-					])
-				)
-				//Save files
-				.pipe(gulp.dest(`${path.base}${path.productionDir}/assets/img`))
-				//Browser sync stream
-				.pipe(bs.stream())
-		);
+		stream = gulp
+			.src(`${src.images}/**/*`)
+			.pipe($.newer(`${dist.images}`))
+			.pipe(
+				$.imagemin([
+					$.imagemin.gifsicle({
+						interlaced: true
+					}),
+					$.imagemin.jpegtran({
+						progressive: true
+					}),
+					$.imagemin.optipng({
+						optimizationLevel: 5
+					}),
+					$.imagemin.svgo({
+						plugins: [
+							{
+								removeViewBox: false
+							},
+							{
+								cleanupIDs: false
+							}
+						]
+					})
+				])
+			)
+			.pipe(gulp.dest(`${dist.images}`));
 	}
+	stream = stream.pipe(reloadStream({ stream: true }));
+	return stream;
 });
 
 /**
- * Server
- * -----------------------------------------------------------------------------
+ * Clean
+ * ================================================================
  */
 
-gulp.task("server", () => {
-	//Create and initialize local server
-	bs.init({
-		server: {
-			baseDir: path.productionDir
-		},
-		open: "local",
-		notify: false,
-		ui: false
-	});
-
-	//Watch for source changes and execute associated tasks
-	gulp.watch(`${path.developmentDir}/pug/**/*.pug`, ["pug"]);
-	gulp.watch(`${path.developmentDir}/sass/vendors/**/*.scss`, ["sass:vendors"]);
-	gulp.watch(`${path.developmentDir}/sass/themes/**/*.scss`, ["sass:themes"]);
-	gulp.watch(
-		[
-			`${path.developmentDir}/sass/**/*.scss`,
-			`!${path.developmentDir}/sass/vendors/**/*.scss`,
-			`!${path.developmentDir}/sass/themes/**/*.scss`
-		],
-		["sass"]
-	);
-	gulp.watch(`${path.developmentDir}/js/vendors/**/*.js`, ["js:vendors"]);
-	gulp.watch(
-		[
-			`${path.developmentDir}/js/**/*.js`,
-			`!${path.developmentDir}/js/vendors/**/*.js`
-		],
-		["js"]
-	);
-	gulp.watch(`${path.developmentDir}/images/**/*`, ["images"]);
-});
+gulp.task("clean", () =>
+	del(`${distRoot}`, {
+		force: true
+	})
+);
 
 /**
- * Default Task
- * -----------------------------------------------------------------------------
+ * Build Theme
+ * ================================================================
  */
-if (isTheme) {
-	gulp.task("default", callback =>
-		sequence(
-			["clean"],
-			["pug"],
-			["sass:vendors"],
-			["sass"],
-			["sass:themes"],
-			["js:vendors"],
-			["js"],
-			["images"],
-			["server"],
-			callback
-		)
+
+gulp.task("zip", () =>
+	gulp
+		.src(`${distRoot}/*`)
+		.pipe($.zip(`${distRoot}.zip`))
+		.pipe(gulp.dest("./"))
+);
+
+if (isThemeforestTheme && isProduction) {
+	gulp.task(
+		"build",
+		gulp.series("clean", "views", "styles", "scripts", "images", "zip")
 	);
 } else {
-	gulp.task("default", callback =>
-		sequence(
-			["clean"],
-			["pug"],
-			["sass:vendors"],
-			["sass"],
-			["js:vendors"],
-			["js"],
-			["images"],
-			["server"],
-			callback
-		)
+	gulp.task(
+		"build",
+		gulp.series("clean", "views", "styles", "scripts", "images")
 	);
 }
+
+/**
+ * Serve
+ * ================================================================
+ */
+
+// 'gulp serve' - open up theme in your browser and watch for changes
+gulp.task("serve", done => {
+	browserSync.init({
+		notify: false,
+		ui: false,
+		port: 3000,
+		server: dist.views
+	});
+
+	done();
+
+	gulp.watch(`${src.views}/**/*.pug`, gulp.series("views", reload));
+	gulp.watch(
+		[
+			`${src.styles}/**/*.scss`,
+			`!${src.stylesColors}/**/*.scss`,
+			`!${src.stylesVendors}/**/*.scss`
+		],
+		gulp.series("style")
+	);
+	gulp.watch(`${src.stylesColors}/**/*.scss`, gulp.series("style:theme"));
+	gulp.watch(`${src.stylesVendors}/**/*.scss`, gulp.series("style:vendors"));
+	gulp.watch(
+		[`${src.scripts}/**/*.js`, `!${src.scriptsVendors}/**/*.js`],
+		gulp.series("script", reload)
+	);
+	gulp.watch(
+		`${src.scriptsVendors}/**/*.js`,
+		gulp.series("script:vendors", reload)
+	);
+	gulp.watch(`${src.images}/**/*`, gulp.series("images", reload));
+});
+
+// 'gulp' - build and serves the theme
+gulp.task("default", gulp.series("build", "serve"));

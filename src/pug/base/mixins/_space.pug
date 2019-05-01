@@ -1,12 +1,22 @@
 //- Line Mixin
 mixin line
-	if (!demo)
+	- if (isThemeforestTheme) {
+		- if (isProduction) {
+			="\n"
+		- }
+	- } else {
 		="\n"
+	- }
 
 //- Tab Mixin
 mixin tab
-	if (!demo)
+	- if (isThemeforestTheme) {
+		- if (isProduction) {
+			="\t"
+		- }
+	- } else {
 		="\t"
+	- }
 
 //- LineTab Mixin
 mixin lineTab
