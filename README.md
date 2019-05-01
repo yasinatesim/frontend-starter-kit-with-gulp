@@ -14,7 +14,7 @@ Front End Starter Kit is an opinionated build automation for front-end web devel
 - Auto-refresh browser with [browser sync](https://www.npmjs.com/package/browser-sync)
 - Minification in production ([Clean CSS](https://www.npmjs.com/package/gulp-clean-css) and [Uglify](https://www.npmjs.com/package/gulp-uglify))
 - Autoprefix CSS with [Autoprefixer](https://www.npmjs.com/package/gulp-autoprefixer)
-- Better errors message in gulp with [Plumber](https://www.npmjs.com/package/gulp-plumber)
+- Better error messages in gulp with [Plumber](https://www.npmjs.com/package/gulp-plumber)
 - Compress images with [Image min](https://www.npmjs.com/package/gulp-imagemin)
 - Show compiled file size with [gulp-size](https://www.npmjs.com/package/gulp-size) in development mode
 - Output project files in zip file for Themeforest production with [gulp-zip](https://www.npmjs.com/package/gulp-zip)
@@ -106,7 +106,7 @@ Folder Structure Tool: [Tree Generator](https://github.com/x3ro/tree-generator)
 
 ## How to use
 
-1. Clone it
+1. Clone this repository
 
 ```bash
 git clone https://github.com/yasinatesim/front-end-starter-kit-with-gulp.git
@@ -127,7 +127,7 @@ git clone https://github.com/yasinatesim/front-end-starter-kit-with-gulp.git
 
 **_gulpfile.js_**
 
-```json
+```javascript
 ...
 // for themeforest theme
 const  isThemeforestTheme  =  false;
@@ -159,6 +159,6 @@ gulp
 
 ## CLI
 
-> I don't recommend using it for now, because under the construction
+* I don't recommend using it for now, because under the construction *
 
 ~~**[create-theme](https://www.npmjs.com/package/create-theme)**~~
