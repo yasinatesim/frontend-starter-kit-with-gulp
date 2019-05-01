@@ -41,13 +41,13 @@ gulp.src = function onError(...args) {
 const pkg = require("./package.json");
 
 // for themeforest theme
-const isThemeforestTheme = false;
+const isThemeforestTheme = true;
 
 // if production mode is active. -> false: developement mode
 const isProduction = false;
 
 // if minified file included in production
-const minifiedFileInclude = false;
+const minifiedFileInclude = true;
 
 // Project Path
 const srcRoot = "src";
