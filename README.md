@@ -159,6 +159,6 @@ gulp
 
 ## CLI
 
-* I don't recommend using it for now, because under the construction *
+*I don't recommend using it for now, because under the construction*
 
 ~~**[create-theme](https://www.npmjs.com/package/create-theme)**~~
