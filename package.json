@@ -5,7 +5,7 @@
 	"homepage": "https://www.yasinates.com",
 	"main": "gulpfile.js",
 	"scripts": {
-		"test": "start"
+		"start": "gulp"
 	},
 	"bugs": {
 		"email": "yasinatesim@gmail.com",
