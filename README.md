@@ -1,6 +1,6 @@
 # Front End Starter Kit with Gulp
 
-![](https://www.yasinates.com/frontend-starter-kit-with-gulp.jpg)
+![](https://camo.githubusercontent.com/3f169896acba409b28ba2f618e5cb96081f6116b/68747470733a2f2f7777772e796173696e617465732e636f6d2f66726f6e74656e642d737461727465722d6b69742d776974682d67756c702e6a7067)
 
 Front End Starter Kit is an opinionated build automation for front-end web development based on [Gulp](http://gulpjs.com/), [Node](https://nodejs.org/), [NPM](https://www.npmjs.com/),[Babel](https://babeljs.io/), [Sass](http://sass-lang.com/), and [Pug](https://pugjs.org/).
 
@@ -159,6 +159,6 @@ gulp
 
 ## CLI
 
-*I don't recommend using it for now, because under the construction*
+*I don't recommend using it for now, because under the development*
 
 ~~**[create-theme](https://www.npmjs.com/package/create-theme)**~~
