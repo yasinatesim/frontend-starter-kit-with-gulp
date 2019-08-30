@@ -172,9 +172,7 @@ gulp.task("style:theme", () => {
 				.on("error", $.sass.logError)
 		)
 		.pipe(
-			$.autoprefixer({
-				browsers: pkg.browserslist
-			})
+			$.autoprefixer()
 		);
 
 	if (isProduction) {
@@ -214,9 +212,7 @@ gulp.task("style:vendors", () => {
 				.on("error", $.sass.logError)
 		)
 		.pipe(
-			$.autoprefixer({
-				browsers: pkg.browserslist
-			})
+			$.autoprefixer()
 		);
 
 	if (isProduction) {
