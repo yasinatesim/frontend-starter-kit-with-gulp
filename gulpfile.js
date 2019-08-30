@@ -132,9 +132,7 @@ gulp.task("style", () => {
 				.on("error", $.sass.logError)
 		)
 		.pipe(
-			$.autoprefixer({
-				browsers: pkg.browserslist
-			})
+			$.autoprefixer()
 		);
 
 	if (isProduction) {
