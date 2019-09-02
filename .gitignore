@@ -1,7 +1,7 @@
 node_modules
-package-lock.json
+package-*.json
 .idea
 .tmp
-.dist
+dist
 .DS_Store
 *.zip

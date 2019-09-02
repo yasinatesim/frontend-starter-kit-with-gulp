@@ -40,23 +40,23 @@ html(lang=siteLanguage)
 
 		title=(pageTitle ? pageTitle + ' - ' + siteTitle:siteTitle)
 
-		include includes/_meta-tags
-		include includes/_styles
+		include ../partials/includes/_meta-tags
+		include ../partials/includes/_styles
 	body
 
-		include includes/_icons
+		include ../partials/includes/_icons
 
 		//- - if (page !== 'login' && page !== 'register' && page !== 'forgot-password'  && page !== '404') {
 		//- 	include header
 		//- 	include sidebar
 		//- - }
 
-		include _header
+		include ../partials/_header
 
 		+line
 		+line
 
-		include _sidebar
+		include ../partials/_sidebar
 
 		+line
 		+line
@@ -66,7 +66,7 @@ html(lang=siteLanguage)
 		+line
 		+line
 
-		include _footer
+		include ../partials/_footer
 
 		+line
 		+line
@@ -75,4 +75,4 @@ html(lang=siteLanguage)
 		//- 	include footer
 		//- - }
 
-		include includes/_scripts
+		include ../partials/includes/_scripts

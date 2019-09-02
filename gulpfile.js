@@ -131,9 +131,7 @@ gulp.task("style", () => {
 				})
 				.on("error", $.sass.logError)
 		)
-		.pipe(
-			$.autoprefixer()
-		);
+		.pipe($.autoprefixer());
 
 	if (isProduction) {
 		if (minifiedFileInclude) {
@@ -171,9 +169,7 @@ gulp.task("style:theme", () => {
 				})
 				.on("error", $.sass.logError)
 		)
-		.pipe(
-			$.autoprefixer()
-		);
+		.pipe($.autoprefixer());
 
 	if (isProduction) {
 		if (minifiedFileInclude) {
@@ -211,9 +207,7 @@ gulp.task("style:vendors", () => {
 				})
 				.on("error", $.sass.logError)
 		)
-		.pipe(
-			$.autoprefixer()
-		);
+		.pipe($.autoprefixer());
 
 	if (isProduction) {
 		if (minifiedFileInclude) {
