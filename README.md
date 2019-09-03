@@ -1,10 +1,12 @@
-# Front End Starter Kit with Gulp
 
-![](https://yasinates.com/frontend-starter-kit-with-gulp.jpg)
+<p align="center">    
+<img src="https://yasinates.com/frontend-starter-kit-with-gulp.jpg">    
+</p>    
+<h2 align="center">Front End Starter Kit with Gulp</h2>
 
-Front End Starter Kit is an opinionated build automation for front-end web development based on [Gulp](http://gulpjs.com/), [Node](https://nodejs.org/), [NPM](https://www.npmjs.com/),[Babel](https://babeljs.io/), [Sass](http://sass-lang.com/), and [Pug](https://pugjs.org/).
+This project is an opinionated build automation for front-end web development based on [Gulp](http://gulpjs.com/), [Node](https://nodejs.org/), [NPM](https://www.npmjs.com/),[Babel](https://babeljs.io/), [Sass](http://sass-lang.com/), and [Pug](https://pugjs.org/).
 
-## Features
+### Features
 
 - Pug compilation with [gulp-pug](https://www.npmjs.com/package/gulp-pug)
 - Tidy Html files with [gulp-prettier](https://www.npmjs.com/package/gulp-prettier)
@@ -19,15 +21,15 @@ Front End Starter Kit is an opinionated build automation for front-end web devel
 - Show compiled file size with [gulp-size](https://www.npmjs.com/package/gulp-size) in development mode
 - Output project files in zip file for Themeforest production with [gulp-zip](https://www.npmjs.com/package/gulp-zip)
 
-## How to use
+### How to use
 
-1. Clone this repository
+1- Clone this repository
 
 ```bash
 git clone https://github.com/yasinatesim/front-end-starter-kit-with-gulp.git
 ```
 
-2. Update your package.json & gulpfile.js files
+2- Update the files
 
 **_package.json_**
 
@@ -53,14 +55,14 @@ const  minifiedFileInclude  =  false;
 ...
 ```
 
-3.  Install dependencies
+3- Install the project dependencies
 
 ```bash
 cd my-new-project
 npm install
 ```
 
-4. Develop awesome things
+4- Develop awesome things
 
 ```bash
 npm start
@@ -71,3 +73,7 @@ or
 ```bash
 gulp
 ```
+  
+### License  
+  
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://badges.mit-license.org)
