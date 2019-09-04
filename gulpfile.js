@@ -426,23 +426,13 @@ gulp.task("serve", done => {
 
 	gulp.watch(`${src.views}/**/*.pug`, gulp.series("views", reload));
 	gulp.watch(
-		[
-			`${src.styles}/**/*.scss`,
-			`!${src.stylesColors}/**/*.scss`,
-			`!${src.stylesVendors}/**/*.scss`
-		],
-		gulp.series("style")
+		[`${src.styles}/**/*.scss`, `!${src.stylesColors}/**/*.scss`, `!${src.stylesVendors}/**/*.scss`],
+		gulp.series("style", reload)
 	);
-	gulp.watch(`${src.stylesColors}/**/*.scss`, gulp.series("style:theme"));
-	gulp.watch(`${src.stylesVendors}/**/*.scss`, gulp.series("style:vendors"));
-	gulp.watch(
-		[`${src.scripts}/**/*.js`, `!${src.scriptsVendors}/**/*.js`],
-		gulp.series("script", reload)
-	);
-	gulp.watch(
-		`${src.scriptsVendors}/**/*.js`,
-		gulp.series("script:vendors", reload)
-	);
+	gulp.watch(`${src.stylesColors}/**/*.scss`, gulp.series("style:theme", reload));
+	gulp.watch(`${src.stylesVendors}/**/*.scss`, gulp.series("style:vendors", reload));
+	gulp.watch([`${src.scripts}/**/*.js`, `!${src.scriptsVendors}/**/*.js`], gulp.series("script", reload));
+	gulp.watch(`${src.scriptsVendors}/**/*.js`, gulp.series("script:vendors", reload));
 	gulp.watch(`${src.images}/**/*`, gulp.series("images", reload));
 });
 
