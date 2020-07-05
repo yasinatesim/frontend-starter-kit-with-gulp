@@ -6,6 +6,10 @@
 
 This project is an opinionated build automation for front-end web development based on [Gulp](http://gulpjs.com/), [Node](https://nodejs.org/), [NPM](https://www.npmjs.com/),[Babel](https://babeljs.io/), [Sass](http://sass-lang.com/), and [Pug](https://pugjs.org/).
 
+
+
+
+
 ### Features
 
 - Pug compilation with [gulp-pug](https://www.npmjs.com/package/gulp-pug)
@@ -22,7 +26,9 @@ This project is an opinionated build automation for front-end web development ba
 - Output project files in zip file for Themeforest production with [gulp-zip](https://www.npmjs.com/package/gulp-zip)
 
 
-### How to use
+### How to use 
+
+
 
 1- Clone this repository
 
